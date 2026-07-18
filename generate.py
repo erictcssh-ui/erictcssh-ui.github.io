@@ -491,7 +491,7 @@ def main():
 
     <section class="hero">
       <h1>治病，也醫人</h1>
-      <p>疼痛與內科彼此牽動——以徒手、針刺與方藥，實踐全人診療的臨床紀錄。</p>
+      <p>以徒手、針刺與方藥，實踐全人診療的臨床紀錄。</p>
       <p><a class="cta" href="clinic.html">📅 門診時間表・掛號方式</a></p>
     </section>
 
