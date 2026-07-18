@@ -6,6 +6,7 @@
 輸出：articles/*.html（含 cat-*/tag-* 專頁）、index.html、sitemap.xml、robots.txt、
       feed.xml、404.html、images/posts/（複製時自動壓縮至最長邊 1600px）
 """
+import hashlib
 import json
 import html
 import shutil
@@ -28,6 +29,9 @@ COVER = "images/cover.jpg"
 LINE_URL = "https://lin.ee/9DUnnrf"
 FB_URL = "https://www.facebook.com/profile.php?id=100078069915625"
 IG_URL = "https://www.instagram.com/tcmdrerichuang"
+
+# CSS 版本號：內容一變網址就變，訪客瀏覽器立即抓新版（避免快取舊樣式）
+CSS_V = hashlib.md5((SITE / "css/style.css").read_bytes()).hexdigest()[:8]
 
 MAX_IMG_EDGE = 1600     # 圖片壓縮：最長邊
 JPEG_QUALITY = "80"
@@ -219,7 +223,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{html.escape(full_title)}</title>
   {head_html}{extra_head}
-  <link rel="stylesheet" href="{css_prefix}css/style.css">
+  <link rel="stylesheet" href="{css_prefix}css/style.css?v={CSS_V}">
 </head>
 <body>
   <header class="site-header">
