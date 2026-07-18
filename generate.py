@@ -4,7 +4,7 @@
 用法：python3 generate.py
 輸入：../fb-export/this_profile's_activity_across_facebook/posts/profile_posts_1.json
 輸出：articles/*.html（含分類頁 cat-*.html、標籤頁 tag-*.html）、articles/index.html、
-      index.html、images/posts/ 媒體檔
+      index.html、sitemap.xml、robots.txt、images/posts/ 媒體檔
 """
 import json
 import html
@@ -22,6 +22,7 @@ SITE_URL = "https://erictcssh-ui.github.io"  # 換自有網域時改這裡再重
 SITE_TITLE = "中醫師 黃彥鈞"
 SUBTITLE = "中醫徒手・內針傷整合・精準全人醫療"
 FOOTER = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
+COVER = "images/cover.jpg"
 
 # 時效性門診公告（停診、時段異動）：不留存（2026-07-17 醫師指示）
 ANNOUNCE_WORDS = ["停診", "休診", "門診時間異動", "門診異動", "看診時間調整", "診所公告"]
@@ -80,7 +81,6 @@ def get_text(post):
 
 
 def get_media(post):
-    """回傳 [(uri, is_video), ...]"""
     out = []
     for att in post.get("attachments", []):
         for a in att.get("data", []):
@@ -106,7 +106,6 @@ def find_tags(text):
 
 def make_title(text, date):
     first = text.split("\n", 1)[0].strip()
-    # 展開全形括號標題【...】
     if first.startswith("【") and "】" in first:
         first = first[1 : first.index("】")].strip()
     if len(first) > 40:
@@ -116,13 +115,13 @@ def make_title(text, date):
 
 def paragraphs(text):
     blocks = [b.strip() for b in text.split("\n\n") if b.strip()]
-    out = []
-    for b in blocks:
-        out.append("<p>" + html.escape(b).replace("\n", "<br>\n") + "</p>")
-    return "\n".join(out)
+    return "\n".join(
+        "<p>" + html.escape(b).replace("\n", "<br>\n") + "</p>" for b in blocks
+    )
 
 
-def page(title, body, css_prefix="../", current="articles", desc=None):
+def page(title, body, css_prefix="../", current="articles", desc=None,
+         url_path=None, og_image=None):
     nav = {
         "index": ("../index.html" if css_prefix == "../" else "index.html", "首頁"),
         "articles": (
@@ -140,15 +139,33 @@ def page(title, body, css_prefix="../", current="articles", desc=None):
         f'<a href="{href}"{cur_attr if key == current else ""}>{label}</a>'
         for key, (href, label) in nav.items()
     )
-    desc_tag = (
-        f'\n  <meta name="description" content="{html.escape(desc)}">' if desc else ""
-    )
+    full_title = f"{title}｜{SITE_TITLE}"
+    head_extra = []
+    if desc:
+        head_extra.append(f'<meta name="description" content="{html.escape(desc)}">')
+    # Open Graph／Twitter 卡片：分享到 FB/LINE/IG 會顯示預覽
+    og_url = f"{SITE_URL}/{url_path}" if url_path is not None else SITE_URL + "/"
+    og_img = f"{SITE_URL}/{og_image or COVER}"
+    head_extra += [
+        f'<link rel="canonical" href="{html.escape(og_url)}">',
+        '<meta property="og:type" content="article">' if css_prefix == "../"
+        else '<meta property="og:type" content="website">',
+        f'<meta property="og:title" content="{html.escape(full_title)}">',
+        f'<meta property="og:description" content="{html.escape(desc or SUBTITLE)}">',
+        f'<meta property="og:url" content="{html.escape(og_url)}">',
+        f'<meta property="og:image" content="{html.escape(og_img)}">',
+        f'<meta property="og:site_name" content="{SITE_TITLE}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<link rel="icon" type="image/svg+xml" href="{css_prefix}favicon.svg">',
+    ]
+    head_html = "\n  ".join(head_extra)
     return f"""<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{html.escape(title)}｜{SITE_TITLE}</title>{desc_tag}
+  <title>{html.escape(full_title)}</title>
+  {head_html}
   <link rel="stylesheet" href="{css_prefix}css/style.css">
 </head>
 <body>
@@ -209,6 +226,22 @@ def listing_page(title, entries, intro=""):
     return "\n".join(body)
 
 
+def related_entries(entry, entries, n=4):
+    """相關文章：共同標籤越多越相關，其次同分類，再依日期新舊。"""
+    scored = []
+    for other in entries:
+        if other["slug"] == entry["slug"]:
+            continue
+        score = 2 * len(set(entry["tags"]) & set(other["tags"]))
+        if other["category"] == entry["category"]:
+            score += 1
+        if score > 0:
+            scored.append((score, other["date"], other))
+    scored.sort(key=lambda x: (-x[0], x[1]), reverse=False)
+    scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
+    return [s[2] for s in scored[:n]]
+
+
 def main():
     with open(POSTS_JSON) as f:
         posts = fix(json.load(f))
@@ -216,15 +249,15 @@ def main():
     MEDIA_OUT.mkdir(parents=True, exist_ok=True)
     ARTICLES.mkdir(exist_ok=True)
 
+    # 第一輪：整理資料
     entries = []
     skipped = 0
     day_counter = {}
-
     for post in sorted(posts, key=lambda p: p.get("timestamp", 0)):
         ts = post.get("timestamp")
         text = get_text(post)
         media = get_media(post)
-        # 沒有文字的貼文（無字幕影片/純照片）不收錄：網站上只會是空卡片
+        # 沒有文字的貼文（無字幕影片/純照片）不收錄
         if not ts or not text:
             skipped += 1
             continue
@@ -233,21 +266,25 @@ def main():
             skipped += 1
             continue
         # 時效性門診公告（短篇且含停診/異動等字樣）不留存
-        if text and len(text) < 300 and any(w in text for w in ANNOUNCE_WORDS):
+        if len(text) < 300 and any(w in text for w in ANNOUNCE_WORDS):
             skipped += 1
             continue
         date = datetime.date.fromtimestamp(ts).isoformat()
         day_counter[date] = day_counter.get(date, 0) + 1
-        slug = f"post-{date}" + (
-            f"-{day_counter[date]}" if day_counter[date] > 1 else ""
+        slug = f"post-{date}" + (f"-{day_counter[date]}" if day_counter[date] > 1 else "")
+        entries.append(
+            dict(
+                date=date, slug=slug, text=text, media=media,
+                title=make_title(text, date),
+                excerpt=text.replace("\n", " ")[:80] + ("…" if len(text) > 80 else ""),
+                category=classify(text), tags=find_tags(text),
+            )
         )
-        title = make_title(text, date)
-        excerpt = text.replace("\n", " ")[:80] + ("…" if len(text) > 80 else "")
-        category = classify(text)
-        tags = find_tags(text)
 
-        media_html = []
-        for uri, is_video in media:
+    # 第二輪：寫文章頁（含媒體複製、相關文章、預約 CTA）
+    for e in entries:
+        media_html, first_image = [], None
+        for uri, is_video in e["media"]:
             src = EXPORT / uri
             if not src.exists():
                 continue
@@ -261,19 +298,40 @@ def main():
                 )
             else:
                 media_html.append(f'<img src="{rel}" alt="" loading="lazy">')
+                if first_image is None:
+                    first_image = f"images/posts/{src.name}"
+
+        related = related_entries(e, entries)
+        related_html = ""
+        if related:
+            items = "\n".join(
+                f'        <li><a href="{r["slug"]}.html">{html.escape(r["title"])}</a>'
+                f'<span class="meta">{r["date"]}</span></li>'
+                for r in related
+            )
+            related_html = f"""
+    <section class="related">
+      <h2>延伸閱讀</h2>
+      <ul>
+{items}
+      </ul>
+    </section>"""
 
         body = f"""    <article class="post">
-      <h1>{html.escape(title)}</h1>
-      <p class="post-meta">{date}　{chip_links(category, tags)}</p>
-{paragraphs(text)}
+      <h1>{html.escape(e['title'])}</h1>
+      <p class="post-meta">{e['date']}　{chip_links(e['category'], e['tags'])}</p>
+{paragraphs(e['text'])}
 {chr(10).join(media_html)}
-    </article>"""
-        (ARTICLES / f"{slug}.html").write_text(
-            page(title, body, desc=excerpt), encoding="utf-8"
-        )
-        entries.append(
-            dict(date=date, slug=slug, title=title, excerpt=excerpt,
-                 category=category, tags=tags)
+    </article>
+
+    <div class="cta-box">
+      <p>有類似的困擾想諮詢？</p>
+      <a class="cta" href="../clinic.html">📅 門診時間・預約掛號</a>
+    </div>{related_html}"""
+        (ARTICLES / f"{e['slug']}.html").write_text(
+            page(e["title"], body, desc=e["excerpt"],
+                 url_path=f"articles/{e['slug']}.html", og_image=first_image),
+            encoding="utf-8",
         )
 
     entries.sort(key=lambda e: e["date"], reverse=True)
@@ -287,11 +345,9 @@ def main():
         if not subset:
             continue
         (ARTICLES / f"cat-{name}.html").write_text(
-            page(
-                f"{name}（分類）",
-                listing_page(f"分類：{name}", subset),
-                desc=f"黃彥鈞中醫師「{name}」分類文章，共 {len(subset)} 篇。",
-            ),
+            page(f"{name}（分類）", listing_page(f"分類：{name}", subset),
+                 desc=f"黃彥鈞中醫師「{name}」分類文章，共 {len(subset)} 篇。",
+                 url_path=f"articles/cat-{name}.html"),
             encoding="utf-8",
         )
 
@@ -303,15 +359,13 @@ def main():
         if not subset:
             continue
         (ARTICLES / f"tag-{name}.html").write_text(
-            page(
-                f"{name}（主題）",
-                listing_page(f"主題：{name}", subset),
-                desc=f"黃彥鈞中醫師關於「{name}」的文章，共 {len(subset)} 篇。",
-            ),
+            page(f"{name}（主題）", listing_page(f"主題：{name}", subset),
+                 desc=f"黃彥鈞中醫師關於「{name}」的文章，共 {len(subset)} 篇。",
+                 url_path=f"articles/tag-{name}.html"),
             encoding="utf-8",
         )
 
-    # 文章總列表：分類導覽＋主題標籤雲＋年份列表
+    # 文章總列表
     nav_cats = "".join(
         f'<a class="tag" href="cat-{n}.html">{n}（{cat_counts[n]}）</a>'
         for n in cat_names if cat_counts[n]
@@ -325,18 +379,16 @@ def main():
       <p><strong>主題</strong>　{nav_tags}</p>
     </div>"""
     (ARTICLES / "index.html").write_text(
-        page(
-            "文章列表",
-            browse + "\n" + listing_page("全部文章", entries),
-            desc="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。",
-        ),
+        page("文章列表", browse + "\n" + listing_page("全部文章", entries),
+             desc="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。",
+             url_path="articles/index.html"),
         encoding="utf-8",
     )
 
-    # 首頁最新 5 篇
+    # 首頁
     home_items = listing_items(entries[:5], link_prefix="articles/")
     home_body = f"""    <section class="cover">
-      <img src="images/cover.png" alt="黃彥鈞 中醫師——{SUBTITLE}">
+      <img src="{COVER}" alt="黃彥鈞 中醫師——{SUBTITLE}">
     </section>
 
     <section class="hero">
@@ -353,14 +405,13 @@ def main():
       <p><a href="articles/index.html">查看全部 {len(entries)} 篇文章 →</a></p>
     </section>"""
     (SITE / "index.html").write_text(
-        page(
-            "首頁", home_body, css_prefix="", current="index",
-            desc=f"{SITE_TITLE}個人網站：{SUBTITLE}。中醫衛教文章、醫案分享與門診資訊。",
-        ),
+        page("首頁", home_body, css_prefix="", current="index",
+             desc=f"{SITE_TITLE}個人網站：{SUBTITLE}。中醫衛教文章、醫案分享與門診資訊。",
+             url_path=""),
         encoding="utf-8",
     )
 
-    # sitemap.xml＋robots.txt（搜尋引擎收錄用）
+    # sitemap.xml＋robots.txt
     urls = [f"{SITE_URL}/", f"{SITE_URL}/articles/index.html",
             f"{SITE_URL}/clinic.html", f"{SITE_URL}/about.html"]
     urls += [f"{SITE_URL}/articles/{e['slug']}.html" for e in entries]
@@ -378,7 +429,6 @@ def main():
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
     print(f"sitemap：{len(urls)} 個網址")
     print("分類：", {k: v for k, v in cat_counts.items()})
-    print("標籤：", dict(sorted(tag_counts.items(), key=lambda x: -x[1])))
     print(f"媒體檔：{len(list(MEDIA_OUT.iterdir()))} 個")
 
 

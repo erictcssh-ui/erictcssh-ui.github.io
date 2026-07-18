@@ -256,3 +256,23 @@ footer.site-footer {
   line-height: 2.2;
 }
 a.tag:hover { background: var(--accent-warm); color: #fff; }
+
+/* 文章底部預約 CTA */
+.cta-box {
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem;
+  margin-top: 2.5rem;
+}
+.cta-box p { margin: 0 0 0.8rem; color: var(--ink-soft); }
+
+/* 延伸閱讀 */
+.related ul { list-style: none; padding: 0; }
+.related li {
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 0;
+}
+.related li a { text-decoration: none; font-weight: 600; }
+.related li .meta { color: var(--ink-soft); font-size: 0.85rem; margin-left: 0.6em; }
