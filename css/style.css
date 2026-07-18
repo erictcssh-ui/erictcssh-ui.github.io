@@ -300,3 +300,23 @@ a.tag:hover { background: var(--accent-warm); color: #fff; }
 .footer-contact, .footer-social { margin: 0.4rem 0; }
 a.cta.line { background: #06c755; padding: 0.35em 1.1em; font-size: 0.9rem; margin-left: 0.6em; }
 a.cta.line:hover { background: #05a648; }
+
+/* 關於頁：形象照＋簡介 */
+.bio {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.6rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+.bio .portrait {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.bio h1 { margin-top: 0; }
+@media (max-width: 600px) {
+  .bio { grid-template-columns: 1fr; }
+  .bio .portrait { max-width: 260px; margin: 0 auto; }
+}

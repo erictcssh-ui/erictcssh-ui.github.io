@@ -586,6 +586,16 @@ def main():
         f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8"
     )
 
+    # 靜態頁（about/clinic）的 CSS 連結同步帶上版本號
+    import re
+    for name in ["about.html", "clinic.html"]:
+        fp = SITE / name
+        if fp.exists():
+            s = fp.read_text(encoding="utf-8")
+            s2 = re.sub(r"css/style\.css(\?v=[a-f0-9]+)?", f"css/style.css?v={CSS_V}", s)
+            if s2 != s:
+                fp.write_text(s2, encoding="utf-8")
+
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
     print(f"本次新壓縮圖片：{compressed} 張")
     print("分類：", {k: v for k, v in cat_counts.items()})
