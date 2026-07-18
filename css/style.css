@@ -276,3 +276,25 @@ a.tag:hover { background: var(--accent-warm); color: #fff; }
 }
 .related li a { text-decoration: none; font-weight: 600; }
 .related li .meta { color: var(--ink-soft); font-size: 0.85rem; margin-left: 0.6em; }
+
+/* 麵包屑 */
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+.breadcrumb a { text-decoration: none; }
+.breadcrumb span { color: var(--ink-soft); }
+
+/* 頁尾 */
+.site-footer .footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.site-footer .footer-nav a { color: var(--accent); text-decoration: none; }
+.footer-contact, .footer-social { margin: 0.4rem 0; }
+a.cta.line { background: #06c755; padding: 0.35em 1.1em; font-size: 0.9rem; margin-left: 0.6em; }
+a.cta.line:hover { background: #05a648; }

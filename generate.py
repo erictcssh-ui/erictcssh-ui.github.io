@@ -3,14 +3,16 @@
 
 用法：python3 generate.py
 輸入：../fb-export/this_profile's_activity_across_facebook/posts/profile_posts_1.json
-輸出：articles/*.html（含分類頁 cat-*.html、標籤頁 tag-*.html）、articles/index.html、
-      index.html、sitemap.xml、robots.txt、images/posts/ 媒體檔
+輸出：articles/*.html（含 cat-*/tag-* 專頁）、index.html、sitemap.xml、robots.txt、
+      feed.xml、404.html、images/posts/（複製時自動壓縮至最長邊 1600px）
 """
 import json
 import html
 import shutil
 import datetime
 from pathlib import Path
+
+from PIL import Image, ImageOps
 
 SITE = Path(__file__).parent
 EXPORT = SITE.parent / "fb-export"
@@ -21,13 +23,19 @@ ARTICLES = SITE / "articles"
 SITE_URL = "https://erictcssh-ui.github.io"  # 換自有網域時改這裡再重跑
 SITE_TITLE = "中醫師 黃彥鈞"
 SUBTITLE = "中醫徒手・內針傷整合・精準全人醫療"
-FOOTER = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
+COPYRIGHT = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
 COVER = "images/cover.jpg"
+LINE_URL = "https://lin.ee/9DUnnrf"
+FB_URL = "https://www.facebook.com/profile.php?id=100078069915625"
+IG_URL = "https://www.instagram.com/tcmdrerichuang"
+
+MAX_IMG_EDGE = 1600     # 圖片壓縮：最長邊
+JPEG_QUALITY = "80"
+COMPRESS_MIN_BYTES = 200_000  # 小於此大小不重壓
 
 # 時效性門診公告（停診、時段異動）：不留存（2026-07-17 醫師指示）
 ANNOUNCE_WORDS = ["停診", "休診", "門診時間異動", "門診異動", "看診時間調整", "診所公告"]
 
-# 大分類：依關鍵字命中數計分，取最高分；都沒中歸「隨筆」
 CATEGORIES = [
     ("醫案分享", ["診間", "患者", "病人", "個案", "來診", "主訴", "治療後", "復診", "初診"]),
     ("課程與進修", ["工作坊", "課程", "學員", "講師", "研習", "助教", "上課", "進修",
@@ -36,7 +44,6 @@ CATEGORIES = [
 ]
 FALLBACK_CATEGORY = "隨筆"
 
-# 主題標籤（可多個）：對搜尋最有價值的症狀／主題入口
 TAGS = {
     "下背痛": ["下背痛", "腰痛"],
     "頭痛・偏頭痛": ["偏頭痛", "頭痛"],
@@ -57,6 +64,9 @@ TAGS = {
     "表面解剖": ["表面解剖"],
     "經典・內經": ["黃帝內經", "內經", "傷寒論", "經方"],
 }
+# 首頁「依症狀找文章」只列症狀類標籤（排除療法/主題類）
+SYMPTOM_TAGS = ["下背痛", "頭痛・偏頭痛", "耳鳴", "膝蓋痛", "肩頸・落枕", "骨盆・薦髂關節",
+                "腸胃・胃食道逆流", "鼻炎・過敏", "婦科・產後", "皮膚", "失眠"]
 
 
 def fix(s):
@@ -130,19 +140,52 @@ def paragraphs(text):
     )
 
 
+def img_dims(path):
+    try:
+        with Image.open(path) as im:
+            return im.size
+    except Exception:
+        return None
+
+
+def compress_image(dest):
+    """就地壓縮：EXIF 轉正、最長邊縮到 MAX_IMG_EDGE、JPEG 品質 75。"""
+    try:
+        with Image.open(dest) as im:
+            im = ImageOps.exif_transpose(im)
+            if im.mode not in ("RGB", "L"):
+                im = im.convert("RGB")
+            im.thumbnail((MAX_IMG_EDGE, MAX_IMG_EDGE))
+            im.save(dest, "JPEG", quality=75, optimize=True, progressive=True)
+    except Exception:
+        pass
+
+
+def footer_html(p):
+    return f"""  <footer class="site-footer">
+    <nav class="footer-nav">
+      <a href="{p}index.html">首頁</a>
+      <a href="{p}articles/index.html">文章</a>
+      <a href="{p}clinic.html">門診資訊</a>
+      <a href="{p}about.html">關於醫師</a>
+      <a href="{p}feed.xml">RSS</a>
+    </nav>
+    <p class="footer-contact">太初中醫 02-2777-5800・東門中醫 02-2343-2000
+      <a class="cta line" href="{LINE_URL}" target="_blank" rel="noopener">LINE 線上預約</a></p>
+    <p class="footer-social">
+      <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>・
+      <a href="{IG_URL}" target="_blank" rel="noopener">Instagram</a></p>
+    <p>{COPYRIGHT}</p>
+  </footer>"""
+
+
 def page(title, body, css_prefix="../", current="articles", desc=None,
-         url_path=None, og_image=None):
+         url_path=None, og_image=None, extra_head=""):
     nav = {
-        "index": ("../index.html" if css_prefix == "../" else "index.html", "首頁"),
-        "articles": (
-            "index.html" if css_prefix == "../" else "articles/index.html",
-            "文章",
-        ),
-        "clinic": (
-            "../clinic.html" if css_prefix == "../" else "clinic.html",
-            "門診資訊",
-        ),
-        "about": ("../about.html" if css_prefix == "../" else "about.html", "關於醫師"),
+        "index": (f"{css_prefix}index.html", "首頁"),
+        "articles": (f"{css_prefix}articles/index.html", "文章"),
+        "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
+        "about": (f"{css_prefix}about.html", "關於醫師"),
     }
     cur_attr = ' aria-current="page"'
     nav_html = "\n      ".join(
@@ -153,7 +196,6 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
     head_extra = []
     if desc:
         head_extra.append(f'<meta name="description" content="{html.escape(desc)}">')
-    # Open Graph／Twitter 卡片：分享到 FB/LINE/IG 會顯示預覽
     og_url = f"{SITE_URL}/{url_path}" if url_path is not None else SITE_URL + "/"
     og_img = f"{SITE_URL}/{og_image or COVER}"
     head_extra += [
@@ -167,6 +209,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         f'<meta property="og:site_name" content="{SITE_TITLE}">',
         '<meta name="twitter:card" content="summary_large_image">',
         f'<link rel="icon" type="image/svg+xml" href="{css_prefix}favicon.svg">',
+        f'<link rel="alternate" type="application/rss+xml" title="{SITE_TITLE}" href="{css_prefix}feed.xml">',
     ]
     head_html = "\n  ".join(head_extra)
     return f"""<!DOCTYPE html>
@@ -175,12 +218,12 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{html.escape(full_title)}</title>
-  {head_html}
+  {head_html}{extra_head}
   <link rel="stylesheet" href="{css_prefix}css/style.css">
 </head>
 <body>
   <header class="site-header">
-    <h1 class="site-title"><a href="{'../' if css_prefix == '../' else ''}index.html">{SITE_TITLE}</a></h1>
+    <h1 class="site-title"><a href="{css_prefix}index.html">{SITE_TITLE}</a></h1>
     <p class="site-subtitle">{SUBTITLE}</p>
     <nav class="site-nav">
       {nav_html}
@@ -191,9 +234,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
 {body}
   </main>
 
-  <footer class="site-footer">
-    {FOOTER}
-  </footer>
+{footer_html(css_prefix)}
 </body>
 </html>
 """
@@ -237,7 +278,6 @@ def listing_page(title, entries, intro=""):
 
 
 def related_entries(entry, entries, n=4):
-    """相關文章：共同標籤越多越相關，其次同分類，再依日期新舊。"""
     scored = []
     for other in entries:
         if other["slug"] == entry["slug"]:
@@ -247,9 +287,39 @@ def related_entries(entry, entries, n=4):
             score += 1
         if score > 0:
             scored.append((score, other["date"], other))
-    scored.sort(key=lambda x: (-x[0], x[1]), reverse=False)
     scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
     return [s[2] for s in scored[:n]]
+
+
+def article_jsonld(e, first_image):
+    img = f"{SITE_URL}/{first_image}" if first_image else f"{SITE_URL}/{COVER}"
+    data = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": e["title"],
+        "datePublished": e["date"],
+        "inLanguage": "zh-Hant",
+        "image": img,
+        "url": f"{SITE_URL}/articles/{e['slug']}.html",
+        "author": {"@type": "Person", "name": "黃彥鈞",
+                   "url": f"{SITE_URL}/about.html", "jobTitle": "中醫師"},
+        "publisher": {"@type": "Person", "name": "黃彥鈞"},
+        "description": e["excerpt"],
+    }
+    crumbs = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "首頁", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": e["category"],
+             "item": f"{SITE_URL}/articles/cat-{e['category']}.html"},
+            {"@type": "ListItem", "position": 3, "name": e["title"]},
+        ],
+    }
+    return ("\n  <script type=\"application/ld+json\">"
+            + json.dumps(data, ensure_ascii=False)
+            + "</script>\n  <script type=\"application/ld+json\">"
+            + json.dumps(crumbs, ensure_ascii=False) + "</script>")
 
 
 def main():
@@ -267,15 +337,12 @@ def main():
         ts = post.get("timestamp")
         text = get_text(post)
         media = get_media(post)
-        # 沒有文字的貼文（無字幕影片/純照片）不收錄
         if not ts or not text:
             skipped += 1
             continue
-        # 轉發類貼文一律略過（多為他人文字，無留存意義）
         if "shared" in post.get("title", "").lower():
             skipped += 1
             continue
-        # 時效性門診公告（短篇且含停診/異動等字樣）不留存
         if len(text) < 300 and any(w in text for w in ANNOUNCE_WORDS):
             skipped += 1
             continue
@@ -291,7 +358,8 @@ def main():
             )
         )
 
-    # 第二輪：寫文章頁（含媒體複製、相關文章、預約 CTA）
+    # 第二輪：寫文章頁（媒體複製＋壓縮、麵包屑、JSON-LD、CTA、延伸閱讀）
+    compressed = 0
     for e in entries:
         media_html, first_image = [], None
         for uri, is_video in e["media"]:
@@ -301,13 +369,20 @@ def main():
             dest = MEDIA_OUT / src.name
             if not dest.exists():
                 shutil.copy2(src, dest)
+                if not is_video and dest.stat().st_size > COMPRESS_MIN_BYTES:
+                    compress_image(dest)
+                    compressed += 1
             rel = f"../images/posts/{src.name}"
             if is_video:
                 media_html.append(
                     f'<video controls preload="metadata" src="{rel}"></video>'
                 )
             else:
-                media_html.append(f'<img src="{rel}" alt="" loading="lazy">')
+                dims = img_dims(dest)
+                size_attr = f' width="{dims[0]}" height="{dims[1]}"' if dims else ""
+                media_html.append(
+                    f'<img src="{rel}" alt="{html.escape(e["title"])}"{size_attr} loading="lazy">'
+                )
                 if first_image is None:
                     first_image = f"images/posts/{src.name}"
 
@@ -327,7 +402,9 @@ def main():
       </ul>
     </section>"""
 
-        body = f"""    <article class="post">
+        body = f"""    <nav class="breadcrumb"><a href="../index.html">首頁</a> › <a href="cat-{e['category']}.html">{e['category']}</a> › <span>{html.escape(e['title'])}</span></nav>
+
+    <article class="post">
       <h1>{html.escape(e['title'])}</h1>
       <p class="post-meta">{e['date']}　{chip_links(e['category'], e['tags'])}</p>
 {paragraphs(e['text'])}
@@ -336,15 +413,18 @@ def main():
 
     <div class="cta-box">
       <p>有類似的困擾想諮詢？</p>
-      <a class="cta" href="../clinic.html">📅 門診時間・預約掛號</a>
+      <p><a class="cta" href="../clinic.html">📅 門診時間・預約掛號</a>
+      <a class="cta line" href="{LINE_URL}" target="_blank" rel="noopener">💬 LINE 線上預約</a></p>
     </div>{related_html}"""
         (ARTICLES / f"{e['slug']}.html").write_text(
             page(e["title"], body, desc=e["excerpt"],
-                 url_path=f"articles/{e['slug']}.html", og_image=first_image),
+                 url_path=f"articles/{e['slug']}.html", og_image=first_image,
+                 extra_head=article_jsonld(e, first_image)),
             encoding="utf-8",
         )
 
     entries.sort(key=lambda e: e["date"], reverse=True)
+    latest_date = entries[0]["date"] if entries else datetime.date.today().isoformat()
 
     # 分類頁
     cat_names = [c[0] for c in CATEGORIES] + [FALLBACK_CATEGORY]
@@ -395,16 +475,25 @@ def main():
         encoding="utf-8",
     )
 
-    # 首頁
+    # 首頁（含「依症狀找文章」）
+    symptom_chips = "".join(
+        f'<a class="tag" href="articles/tag-{n}.html">{n}（{tag_counts[n]}）</a>'
+        for n in SYMPTOM_TAGS if tag_counts.get(n)
+    )
     home_items = listing_items(entries[:5], link_prefix="articles/")
     home_body = f"""    <section class="cover">
-      <img src="{COVER}" alt="黃彥鈞 中醫師——{SUBTITLE}">
+      <img src="{COVER}" alt="黃彥鈞 中醫師——{SUBTITLE}" width="2000" height="875">
     </section>
 
     <section class="hero">
       <h1>望聞問切，醫理相傳</h1>
       <p>這裡是我在臨床與讀書之間的思考——中醫衛教、醫案心得與養生知識。</p>
       <p><a class="cta" href="clinic.html">📅 門診時間表・掛號方式</a></p>
+    </section>
+
+    <section>
+      <h2>依症狀找文章</h2>
+      <div class="browse"><p>{symptom_chips}</p></div>
     </section>
 
     <section>
@@ -421,15 +510,72 @@ def main():
         encoding="utf-8",
     )
 
-    # sitemap.xml＋robots.txt
-    urls = [f"{SITE_URL}/", f"{SITE_URL}/articles/index.html",
-            f"{SITE_URL}/clinic.html", f"{SITE_URL}/about.html"]
-    urls += [f"{SITE_URL}/articles/{e['slug']}.html" for e in entries]
-    urls += [f"{SITE_URL}/articles/cat-{n}.html" for n in cat_names if cat_counts[n]]
-    urls += [f"{SITE_URL}/articles/tag-{n}.html" for n, c in tag_counts.items() if c]
+    # 404（GitHub Pages 會對任何路徑套用，連結需用根絕對路徑）
+    (SITE / "404.html").write_text(f"""<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>找不到頁面｜{SITE_TITLE}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title"><a href="/">{SITE_TITLE}</a></h1>
+    <p class="site-subtitle">{SUBTITLE}</p>
+  </header>
+  <main style="text-align:center">
+    <h1>🌿 找不到這個頁面</h1>
+    <p>網址可能打錯了，或這篇文章已移除。</p>
+    <p><a class="cta" href="/">回首頁</a>　<a class="cta" href="/articles/index.html">看全部文章</a></p>
+  </main>
+  <footer class="site-footer"><p>{COPYRIGHT}</p></footer>
+</body>
+</html>
+""", encoding="utf-8")
+
+    # RSS（最新 20 篇）
+    rss_items = []
+    for e in entries[:20]:
+        rss_items.append(f"""    <item>
+      <title>{html.escape(e['title'])}</title>
+      <link>{SITE_URL}/articles/{e['slug']}.html</link>
+      <guid>{SITE_URL}/articles/{e['slug']}.html</guid>
+      <pubDate>{datetime.datetime.fromisoformat(e['date']).strftime('%a, %d %b %Y')} 00:00:00 +0800</pubDate>
+      <description>{html.escape(e['excerpt'])}</description>
+    </item>""")
+    (SITE / "feed.xml").write_text(
+        f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{SITE_TITLE}</title>
+    <link>{SITE_URL}/</link>
+    <description>{SUBTITLE}——中醫衛教、醫案分享與課程心得</description>
+    <language>zh-Hant</language>
+{chr(10).join(rss_items)}
+  </channel>
+</rss>
+""", encoding="utf-8")
+
+    # sitemap.xml（含 lastmod）＋robots.txt
+    def url_tag(loc, lastmod):
+        return f"  <url><loc>{html.escape(loc)}</loc><lastmod>{lastmod}</lastmod></url>"
+
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    sitemap += [f"  <url><loc>{html.escape(u)}</loc></url>" for u in urls]
+    for p in ["", "articles/index.html", "clinic.html", "about.html"]:
+        sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
+    for e in entries:
+        sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
+    for n in cat_names:
+        if cat_counts[n]:
+            sub = [e["date"] for e in entries if e["category"] == n]
+            sitemap.append(url_tag(f"{SITE_URL}/articles/cat-{n}.html", max(sub)))
+    for n, c in tag_counts.items():
+        if c:
+            sub = [e["date"] for e in entries if n in e["tags"]]
+            sitemap.append(url_tag(f"{SITE_URL}/articles/tag-{n}.html", max(sub)))
     sitemap.append("</urlset>")
     (SITE / "sitemap.xml").write_text("\n".join(sitemap), encoding="utf-8")
     (SITE / "robots.txt").write_text(
@@ -437,7 +583,7 @@ def main():
     )
 
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
-    print(f"sitemap：{len(urls)} 個網址")
+    print(f"本次新壓縮圖片：{compressed} 張")
     print("分類：", {k: v for k, v in cat_counts.items()})
     print(f"媒體檔：{len(list(MEDIA_OUT.iterdir()))} 個")
 
