@@ -101,7 +101,17 @@ def classify(text):
 
 
 def find_tags(text):
-    return [name for name, words in TAGS.items() if any(w in text for w in words)]
+    """相關性計分：關鍵詞出現次數＋標題命中加權，每篇最多取 3 個主軸標籤。"""
+    title_line = text.split("\n", 1)[0]
+    scored = []
+    for name, words in TAGS.items():
+        occurrences = sum(text.count(w) for w in words)
+        if occurrences == 0:
+            continue
+        score = occurrences + (5 if any(w in title_line for w in words) else 0)
+        scored.append((score, name))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    return [name for _, name in scored[:3]]
 
 
 def make_title(text, date):
