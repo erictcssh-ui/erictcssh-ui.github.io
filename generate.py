@@ -18,6 +18,7 @@ POSTS_JSON = EXPORT / "this_profile's_activity_across_facebook/posts/profile_pos
 MEDIA_OUT = SITE / "images/posts"
 ARTICLES = SITE / "articles"
 
+SITE_URL = "https://erictcssh-ui.github.io"  # 換自有網域時改這裡再重跑
 SITE_TITLE = "中醫師 黃彥鈞"
 SUBTITLE = "中醫徒手・內針傷整合・精準全人醫療"
 FOOTER = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
@@ -359,7 +360,23 @@ def main():
         encoding="utf-8",
     )
 
+    # sitemap.xml＋robots.txt（搜尋引擎收錄用）
+    urls = [f"{SITE_URL}/", f"{SITE_URL}/articles/index.html",
+            f"{SITE_URL}/clinic.html", f"{SITE_URL}/about.html"]
+    urls += [f"{SITE_URL}/articles/{e['slug']}.html" for e in entries]
+    urls += [f"{SITE_URL}/articles/cat-{n}.html" for n in cat_names if cat_counts[n]]
+    urls += [f"{SITE_URL}/articles/tag-{n}.html" for n, c in tag_counts.items() if c]
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    sitemap += [f"  <url><loc>{html.escape(u)}</loc></url>" for u in urls]
+    sitemap.append("</urlset>")
+    (SITE / "sitemap.xml").write_text("\n".join(sitemap), encoding="utf-8")
+    (SITE / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8"
+    )
+
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
+    print(f"sitemap：{len(urls)} 個網址")
     print("分類：", {k: v for k, v in cat_counts.items()})
     print("標籤：", dict(sorted(tag_counts.items(), key=lambda x: -x[1])))
     print(f"媒體檔：{len(list(MEDIA_OUT.iterdir()))} 個")
