@@ -1,0 +1,258 @@
+/* 中醫師 黃彥鈞 個人網站 — 全站樣式 */
+
+:root {
+  --bg: #faf8f3;
+  --surface: #ffffff;
+  --ink: #2b2b28;
+  --ink-soft: #6b6a63;
+  --accent: #2f5d50;        /* 深松綠 */
+  --accent-warm: #b0533a;   /* 硃砂 */
+  --border: #e5e1d6;
+  --max-width: 46rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1d1a;
+    --surface: #262622;
+    --ink: #eae7de;
+    --ink-soft: #a3a094;
+    --accent: #7fb8a4;
+    --accent-warm: #d98a71;
+    --border: #3a3933;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Serif TC", "Songti TC", "PingFang TC", serif;
+  line-height: 1.85;
+  font-size: 1.05rem;
+}
+
+header.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 1.4rem 1rem;
+  text-align: center;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  margin: 0;
+}
+.site-title a { color: var(--ink); text-decoration: none; }
+
+.site-subtitle {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  margin: 0.3rem 0 0;
+}
+
+nav.site-nav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+nav.site-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  font-size: 0.95rem;
+}
+nav.site-nav a:hover,
+nav.site-nav a[aria-current="page"] {
+  border-bottom: 2px solid var(--accent-warm);
+}
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+h1, h2, h3 { line-height: 1.4; letter-spacing: 0.05em; }
+h1 { font-size: 1.7rem; }
+h2 { font-size: 1.3rem; color: var(--accent); margin-top: 2.5rem; }
+
+a { color: var(--accent); }
+
+.cover img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.hero {
+  text-align: center;
+  padding: 1.5rem 0 2rem;
+}
+
+.specialty {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.specialty .col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+}
+.specialty h3 {
+  margin: 0 0 0.5rem;
+  color: var(--accent);
+  border-left: 4px solid var(--accent-warm);
+  padding-left: 0.6rem;
+}
+.specialty ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.specialty li { margin: 0.3rem 0; }
+
+/* 門診時間表 */
+.schedule-wrap { overflow-x: auto; }
+table.schedule {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 34rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.92rem;
+  text-align: center;
+}
+table.schedule th, table.schedule td {
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.4rem;
+}
+table.schedule th { color: var(--accent); font-weight: 600; white-space: nowrap; }
+table.schedule td.slot { color: var(--ink-soft); white-space: nowrap; }
+table.schedule td.slot strong { color: var(--ink); display: block; }
+.chip {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 0.15em 0.6em;
+  font-size: 0.85rem;
+  color: #fff;
+  white-space: nowrap;
+}
+.chip small { display: block; font-size: 0.72rem; opacity: 0.9; }
+.chip.taichu { background: #5b7a9d; }
+.chip.special { background: #cc8a3d; }
+.chip.dongmen { background: #4c8a74; }
+.legend { font-size: 0.85rem; color: var(--ink-soft); margin: 0.6rem 0 0; }
+.legend .chip { margin-right: 0.4em; }
+.clinic-info { margin-top: 1.2rem; }
+.clinic-info p { margin: 0.4rem 0; }
+.hero p { color: var(--ink-soft); }
+
+a.cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6em 1.6em;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+}
+a.cta:hover { background: var(--accent-warm); }
+
+.article-list { list-style: none; padding: 0; }
+.article-list li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1rem;
+}
+.article-list a {
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.article-list .meta {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+.article-list .excerpt {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.tag {
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 0.35em;
+  font-size: 0.75rem;
+  color: var(--accent-warm);
+  border: 1px solid var(--accent-warm);
+  border-radius: 999px;
+  padding: 0 0.6em;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+article.post .post-meta {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+article.post img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 1.2rem;
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  color: var(--ink-soft);
+}
+
+footer.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  padding: 2rem 1rem;
+  letter-spacing: 0.1em;
+}
+
+.notice {
+  background: var(--surface);
+  border: 1px dashed var(--accent-warm);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+
+.browse {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.8rem 1.2rem;
+  line-height: 2.2;
+}
+a.tag:hover { background: var(--accent-warm); color: #fff; }
