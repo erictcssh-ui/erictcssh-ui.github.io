@@ -320,3 +320,20 @@ a.cta.line:hover { background: #05a648; }
   .bio { grid-template-columns: 1fr; }
   .bio .portrait { max-width: 260px; margin: 0 auto; }
 }
+
+/* 站內搜尋 */
+.search-box input {
+  width: 100%;
+  padding: 0.7em 1.1em;
+  font-size: 1.05rem;
+  font-family: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+.search-box input:focus {
+  outline: none;
+  border-color: var(--accent);
+}

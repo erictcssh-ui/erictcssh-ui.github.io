@@ -477,13 +477,70 @@ def main():
         f'<a class="tag" href="tag-{n}.html">{n}（{c}）</a>'
         for n, c in sorted(tag_counts.items(), key=lambda x: -x[1]) if c
     )
+    # 全文搜尋索引（給站內搜尋用）
+    search_index = [
+        {"t": e["title"], "u": e["slug"], "d": e["date"],
+         "g": e["tags"], "x": e["text"][:1500]}
+        for e in entries
+    ]
+    (SITE / "search-index.json").write_text(
+        json.dumps(search_index, ensure_ascii=False), encoding="utf-8"
+    )
+
+    search_ui = """    <div class="search-box">
+      <input type="search" id="q" placeholder="🔍 搜尋文章：症狀、療法、關鍵字⋯" autocomplete="off">
+    </div>
+    <div id="sr"></div>
+    <div id="listing">"""
+    search_js = """    </div>
+    <script>
+    (function(){
+      var q=document.getElementById('q'),sr=document.getElementById('sr'),
+          listing=document.getElementById('listing'),idx=null,timer=null;
+      function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+      q.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(run,200);});
+      function run(){
+        var s=q.value.trim();
+        if(!s){sr.innerHTML='';listing.style.display='';return;}
+        var go=function(){
+          var terms=s.toLowerCase().split(/\\s+/);
+          var res=[];
+          for(var i=0;i<idx.length;i++){
+            var a=idx[i],hay=(a.t+'\\n'+a.g.join(' ')+'\\n'+a.x).toLowerCase(),score=0,ok=true;
+            for(var j=0;j<terms.length;j++){
+              var w=terms[j];
+              if(hay.indexOf(w)===-1){ok=false;break;}
+              if(a.t.toLowerCase().indexOf(w)>-1)score+=10;
+              for(var k=0;k<a.g.length;k++){if(a.g[k].toLowerCase().indexOf(w)>-1){score+=5;break;}}
+              score+=Math.min(a.x.toLowerCase().split(w).length-1,5);
+            }
+            if(ok)res.push({a:a,score:score});
+          }
+          res.sort(function(x,y){return y.score-x.score||(y.a.d<x.a.d?-1:1);});
+          res=res.slice(0,50);
+          listing.style.display='none';
+          if(!res.length){sr.innerHTML='<p>沒有找到符合「'+esc(s)+'」的文章。</p>';return;}
+          var h='<p>找到 '+res.length+' 篇：</p><ul class="article-list">';
+          for(var m=0;m<res.length;m++){
+            var a=res[m].a;
+            h+='<li><a href="'+a.u+'.html">'+esc(a.t)+'</a><span class="meta">'+a.d+'</span><p class="excerpt">'+esc(a.x.slice(0,80))+'…</p></li>';
+          }
+          sr.innerHTML=h+'</ul>';
+        };
+        if(idx){go();}
+        else{fetch('../search-index.json').then(function(r){return r.json();}).then(function(d){idx=d;go();});}
+      }
+    })();
+    </script>"""
     browse = f"""    <div class="browse">
       <p><strong>分類</strong>　{nav_cats}</p>
       <p><strong>主題</strong>　{nav_tags}</p>
     </div>"""
     (ARTICLES / "index.html").write_text(
-        page("文章列表", browse + "\n" + listing_page("全部文章", entries),
-             desc="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。",
+        page("文章列表",
+             search_ui + "\n" + browse + "\n"
+             + listing_page("全部文章", entries) + "\n" + search_js,
+             desc="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。可搜尋症狀與主題關鍵字。",
              url_path="articles/index.html"),
         encoding="utf-8",
     )

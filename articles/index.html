@@ -11,18 +11,18 @@
     gtag('js', new Date());
     gtag('config', 'G-X33M4KHKF0');
   </script>
-  <meta name="description" content="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。">
+  <meta name="description" content="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。可搜尋症狀與主題關鍵字。">
   <link rel="canonical" href="https://erictcssh-ui.github.io/articles/index.html">
   <meta property="og:type" content="article">
   <meta property="og:title" content="文章列表｜中醫師 黃彥鈞">
-  <meta property="og:description" content="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。">
+  <meta property="og:description" content="黃彥鈞中醫師全部文章：醫案分享、中醫衛教、課程與進修心得。可搜尋症狀與主題關鍵字。">
   <meta property="og:url" content="https://erictcssh-ui.github.io/articles/index.html">
   <meta property="og:image" content="https://erictcssh-ui.github.io/images/cover.jpg">
   <meta property="og:site_name" content="中醫師 黃彥鈞">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="alternate" type="application/rss+xml" title="中醫師 黃彥鈞" href="../feed.xml">
-  <link rel="stylesheet" href="../css/style.css?v=4b64600a">
+  <link rel="stylesheet" href="../css/style.css?v=f862ee89">
 </head>
 <body>
   <header class="site-header">
@@ -37,6 +37,11 @@
   </header>
 
   <main>
+    <div class="search-box">
+      <input type="search" id="q" placeholder="🔍 搜尋文章：症狀、療法、關鍵字⋯" autocomplete="off">
+    </div>
+    <div id="sr"></div>
+    <div id="listing">
     <div class="browse">
       <p><strong>分類</strong>　<a class="tag" href="cat-醫案分享.html">醫案分享（73）</a><a class="tag" href="cat-課程與進修.html">課程與進修（69）</a><a class="tag" href="cat-中醫衛教.html">中醫衛教（25）</a><a class="tag" href="cat-隨筆.html">隨筆（82）</a></p>
       <p><strong>主題</strong>　<a class="tag" href="tag-徒手治療.html">徒手治療（89）</a><a class="tag" href="tag-乾針.html">乾針（35）</a><a class="tag" href="tag-骨盆・薦髂關節.html">骨盆・薦髂關節（33）</a><a class="tag" href="tag-肩頸・落枕.html">肩頸・落枕（22）</a><a class="tag" href="tag-表面解剖.html">表面解剖（20）</a><a class="tag" href="tag-婦科・產後.html">婦科・產後（15）</a><a class="tag" href="tag-頭痛・偏頭痛.html">頭痛・偏頭痛（12）</a><a class="tag" href="tag-下背痛.html">下背痛（8）</a><a class="tag" href="tag-耳鳴.html">耳鳴（7）</a><a class="tag" href="tag-疤痕鬆解.html">疤痕鬆解（7）</a><a class="tag" href="tag-經典・內經.html">經典・內經（6）</a><a class="tag" href="tag-腸胃・胃食道逆流.html">腸胃・胃食道逆流（5）</a><a class="tag" href="tag-顱頸整合.html">顱頸整合（4）</a><a class="tag" href="tag-膝蓋痛.html">膝蓋痛（3）</a><a class="tag" href="tag-美顏針.html">美顏針（3）</a><a class="tag" href="tag-鼻炎・過敏.html">鼻炎・過敏（1）</a><a class="tag" href="tag-失眠.html">失眠（1）</a></p>
@@ -1302,6 +1307,46 @@
         <p class="excerpt">新的一年決定做個新的嘗試，希望能在忙碌的日子裡留下一點努力過的痕跡！💪 💪 💪</p>
       </li>
     </ul>
+    </div>
+    <script>
+    (function(){
+      var q=document.getElementById('q'),sr=document.getElementById('sr'),
+          listing=document.getElementById('listing'),idx=null,timer=null;
+      function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+      q.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(run,200);});
+      function run(){
+        var s=q.value.trim();
+        if(!s){sr.innerHTML='';listing.style.display='';return;}
+        var go=function(){
+          var terms=s.toLowerCase().split(/\s+/);
+          var res=[];
+          for(var i=0;i<idx.length;i++){
+            var a=idx[i],hay=(a.t+'\n'+a.g.join(' ')+'\n'+a.x).toLowerCase(),score=0,ok=true;
+            for(var j=0;j<terms.length;j++){
+              var w=terms[j];
+              if(hay.indexOf(w)===-1){ok=false;break;}
+              if(a.t.toLowerCase().indexOf(w)>-1)score+=10;
+              for(var k=0;k<a.g.length;k++){if(a.g[k].toLowerCase().indexOf(w)>-1){score+=5;break;}}
+              score+=Math.min(a.x.toLowerCase().split(w).length-1,5);
+            }
+            if(ok)res.push({a:a,score:score});
+          }
+          res.sort(function(x,y){return y.score-x.score||(y.a.d<x.a.d?-1:1);});
+          res=res.slice(0,50);
+          listing.style.display='none';
+          if(!res.length){sr.innerHTML='<p>沒有找到符合「'+esc(s)+'」的文章。</p>';return;}
+          var h='<p>找到 '+res.length+' 篇：</p><ul class="article-list">';
+          for(var m=0;m<res.length;m++){
+            var a=res[m].a;
+            h+='<li><a href="'+a.u+'.html">'+esc(a.t)+'</a><span class="meta">'+a.d+'</span><p class="excerpt">'+esc(a.x.slice(0,80))+'…</p></li>';
+          }
+          sr.innerHTML=h+'</ul>';
+        };
+        if(idx){go();}
+        else{fetch('../search-index.json').then(function(r){return r.json();}).then(function(d){idx=d;go();});}
+      }
+    })();
+    </script>
   </main>
 
   <footer class="site-footer">
