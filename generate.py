@@ -50,35 +50,52 @@ ANNOUNCE_WORDS = ["停診", "休診", "門診時間異動", "門診異動", "看
 
 CATEGORIES = [
     ("醫案分享", ["診間", "患者", "病人", "個案", "來診", "主訴", "治療後", "復診", "初診"]),
-    ("課程與進修", ["工作坊", "課程", "學員", "講師", "研習", "助教", "上課", "進修",
-                    "筆記", "Module", "SCS", "CounterStrain", "Scar work", "PAK", "研討"]),
+    ("教學與工作坊", ["工作坊", "講師", "助教", "學員", "授課", "教學", "梯次", "開課"]),
+    ("進修筆記", ["進修", "上課", "課程", "筆記", "研習", "研討",
+                  "Module", "SCS", "CounterStrain", "Scar work", "PAK"]),
     ("中醫衛教", ["衛教", "保養", "建議", "日常", "飲食", "睡眠", "中暑", "養生", "預防", "注意"]),
 ]
 FALLBACK_CATEGORY = "隨筆"
 
-TAGS = {
-    "下背痛": ["下背痛", "腰痛"],
-    "頭痛・偏頭痛": ["偏頭痛", "頭痛"],
-    "耳鳴": ["耳鳴"],
-    "膝蓋痛": ["膝蓋痛", "膝痛"],
-    "肩頸・落枕": ["肩頸", "落枕", "頸椎"],
-    "骨盆・薦髂關節": ["骨盆", "薦髂"],
-    "乾針": ["乾針"],
-    "徒手治療": ["徒手"],
-    "疤痕鬆解": ["疤痕"],
-    "顱頸整合": ["顱頸", "顱初"],
-    "美顏針": ["美顏針", "F.A.C.E"],
-    "腸胃・胃食道逆流": ["胃食道逆流", "脹氣", "腸胃", "胃痛"],
-    "鼻炎・過敏": ["鼻炎", "過敏", "鼻塞"],
-    "婦科・產後": ["經痛", "月經", "產後", "孕"],
-    "皮膚": ["皮膚癢", "蕁麻疹", "濕疹"],
-    "失眠": ["失眠"],
-    "表面解剖": ["表面解剖"],
-    "經典・內經": ["黃帝內經", "內經", "傷寒論", "經方"],
-}
-# 首頁「依症狀找文章」只列症狀類標籤（排除療法/主題類）
-SYMPTOM_TAGS = ["下背痛", "頭痛・偏頭痛", "耳鳴", "膝蓋痛", "肩頸・落枕", "骨盆・薦髂關節",
-                "腸胃・胃食道逆流", "鼻炎・過敏", "婦科・產後", "皮膚", "失眠"]
+# 標籤四維度：部位（區域）／症狀（主訴）／療法／主題
+TAG_GROUPS = [
+    ("部位", {
+        "肩頸": ["肩頸", "頸椎", "脖子", "肩膀"],
+        "下背・腰": ["下背", "腰痛", "腰椎", "閃到腰"],
+        "骨盆": ["骨盆"],
+        "薦髂關節": ["薦髂"],
+        "膝蓋": ["膝蓋", "膝痛", "膝關節"],
+        "手肘・手腕": ["網球肘", "高爾夫球肘", "媽媽手", "手腕", "手肘", "板機指"],
+        "足・踝": ["足底筋膜", "腳踝", "足弓", "足跟", "拇趾"],
+        "顳顎關節": ["顳顎"],
+    }),
+    ("症狀", {
+        "落枕": ["落枕"],
+        "頭痛・偏頭痛": ["頭痛", "偏頭痛"],
+        "暈眩": ["暈眩", "頭暈", "眩暈"],
+        "耳鳴・耳悶": ["耳鳴", "耳悶", "腦鳴"],
+        "失眠": ["失眠"],
+        "經痛・月經": ["經痛", "月經"],
+        "產後・孕期": ["產後", "孕婦", "懷孕", "哺乳"],
+        "腸胃・胃食道逆流": ["胃食道逆流", "脹氣", "腸胃", "胃痛", "便秘"],
+        "鼻炎・過敏": ["鼻炎", "鼻塞", "過敏"],
+        "皮膚": ["皮膚癢", "蕁麻疹", "濕疹"],
+    }),
+    ("療法", {
+        "乾針": ["乾針"],
+        "徒手治療": ["徒手"],
+        "疤痕鬆解": ["疤痕"],
+        "顱頸整合": ["顱頸", "顱初"],
+        "美顏針": ["美顏針", "F.A.C.E"],
+        "中藥調理": ["中藥", "方藥", "湯藥", "科學中藥", "水藥"],
+    }),
+    ("主題", {
+        "表面解剖": ["表面解剖"],
+        "經典・內經": ["黃帝內經", "內經", "傷寒論", "經方"],
+    }),
+]
+TAGS = {name: words for _, group in TAG_GROUPS for name, words in group.items()}
+MAX_TAGS = 4  # 每篇最多標籤數（部位＋症狀＋療法可共存）
 
 
 def fix(s):
@@ -133,7 +150,7 @@ def find_tags(text):
         score = occurrences + (5 if any(w in title_line for w in words) else 0)
         scored.append((score, name))
     scored.sort(key=lambda x: (-x[0], x[1]))
-    return [name for _, name in scored[:3]]
+    return [name for _, name in scored[:MAX_TAGS]]
 
 
 def make_title(text, date):
@@ -473,10 +490,6 @@ def main():
         f'<a class="tag" href="cat-{n}.html">{n}（{cat_counts[n]}）</a>'
         for n in cat_names if cat_counts[n]
     )
-    nav_tags = "".join(
-        f'<a class="tag" href="tag-{n}.html">{n}（{c}）</a>'
-        for n, c in sorted(tag_counts.items(), key=lambda x: -x[1]) if c
-    )
     # 全文搜尋索引（給站內搜尋用）
     search_index = [
         {"t": e["title"], "u": e["slug"], "d": e["date"],
@@ -534,10 +547,18 @@ def main():
       }
     })();
     </script>"""
-    browse = f"""    <div class="browse">
-      <p><strong>分類</strong>　{nav_cats}</p>
-      <p><strong>主題</strong>　{nav_tags}</p>
-    </div>"""
+    group_rows = []
+    for group_name, group in TAG_GROUPS:
+        chips = "".join(
+            f'<a class="tag" href="tag-{n}.html">{n}（{tag_counts[n]}）</a>'
+            for n in sorted(group, key=lambda x: -tag_counts.get(x, 0))
+            if tag_counts.get(n)
+        )
+        if chips:
+            group_rows.append(f"      <p><strong>{group_name}</strong>　{chips}</p>")
+    browse = ('    <div class="browse">\n'
+              + f"      <p><strong>分類</strong>　{nav_cats}</p>\n"
+              + "\n".join(group_rows) + "\n    </div>")
     (ARTICLES / "index.html").write_text(
         page("文章列表",
              search_ui + "\n" + browse + "\n"
@@ -547,10 +568,12 @@ def main():
         encoding="utf-8",
     )
 
-    # 首頁（含「依症狀找文章」）
+    # 首頁（含「依症狀・部位找文章」：列症狀與部位兩個維度）
+    home_tag_names = [n for gname, g in TAG_GROUPS if gname in ("症狀", "部位") for n in g]
     symptom_chips = "".join(
         f'<a class="tag" href="articles/tag-{n}.html">{n}（{tag_counts[n]}）</a>'
-        for n in SYMPTOM_TAGS if tag_counts.get(n)
+        for n in sorted(home_tag_names, key=lambda x: -tag_counts.get(x, 0))
+        if tag_counts.get(n)
     )
     home_items = listing_items(entries[:5], link_prefix="articles/")
     home_body = f"""    <section class="cover">
@@ -564,7 +587,7 @@ def main():
     </section>
 
     <section>
-      <h2>依症狀找文章</h2>
+      <h2>依症狀・部位找文章</h2>
       <div class="browse"><p>{symptom_chips}</p></div>
     </section>
 
