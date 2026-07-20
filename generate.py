@@ -498,6 +498,9 @@ def main():
       var q=document.getElementById('q'),sr=document.getElementById('sr'),
           listing=document.getElementById('listing'),idx=null,timer=null;
       function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+      var loading=null;
+      function load(){if(!loading){loading=fetch('../search-index.json').then(function(r){return r.json();}).then(function(d){idx=d;return d;});}return loading;}
+      q.addEventListener('focus',load,{once:true});
       q.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(run,200);});
       function run(){
         var s=q.value.trim();
@@ -527,8 +530,7 @@ def main():
           }
           sr.innerHTML=h+'</ul>';
         };
-        if(idx){go();}
-        else{fetch('../search-index.json').then(function(r){return r.json();}).then(function(d){idx=d;go();});}
+        if(idx){go();}else{load().then(go);}
       }
     })();
     </script>"""
