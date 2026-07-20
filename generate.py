@@ -27,6 +27,14 @@ SUBTITLE = "中醫徒手・內針傷整合・精準全人醫療"
 COPYRIGHT = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
 COVER = "images/cover.jpg"
 LINE_URL = "https://lin.ee/9DUnnrf"
+GA_ID = "G-X33M4KHKF0"  # Google Analytics 4
+GA_SNIPPET = f"""<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{GA_ID}');
+  </script>"""
 FB_URL = "https://www.facebook.com/profile.php?id=100078069915625"
 IG_URL = "https://www.instagram.com/tcmdrerichuang"
 
@@ -222,6 +230,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{html.escape(full_title)}</title>
+  {GA_SNIPPET}
   {head_html}{extra_head}
   <link rel="stylesheet" href="{css_prefix}css/style.css?v={CSS_V}">
 </head>
