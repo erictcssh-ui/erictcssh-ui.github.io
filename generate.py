@@ -165,7 +165,14 @@ def find_tags(text):
         occurrences = sum(text.count(w) for w in words)
         if occurrences == 0:
             continue
-        score = occurrences + (5 if any(w in title_line for w in words) else 0)
+        title_hit = any(w in title_line for w in words)
+        # 相關門檻（避免「放射到腳踝」這類順帶一提的弱關聯誤標）：
+        # 標題命中、或出現 3 次以上、或出現 2 次且首次出現在文章前 1/4（主題詞會早早登場）
+        first_pos = min(text.find(w) for w in words if w in text)
+        early = first_pos < len(text) * 0.25
+        if not (title_hit or occurrences >= 3 or (occurrences >= 2 and early)):
+            continue
+        score = occurrences + (5 if title_hit else 0)
         scored.append((score, name))
     scored.sort(key=lambda x: (-x[0], x[1]))
     return [name for _, name in scored[:MAX_TAGS]]
