@@ -337,3 +337,18 @@ a.cta.line:hover { background: #05a648; }
   outline: none;
   border-color: var(--accent);
 }
+
+/* 主題頁導言 */
+.tag-intro {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.8rem;
+}
+.tag-intro p { margin: 0 0 0.6rem; }
+.tag-intro .intro-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
