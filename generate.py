@@ -801,16 +801,16 @@ def main():
     </section>
 
     <section>
+      <h2>依症狀・部位找文章</h2>
+      <div class="browse"><p>{symptom_chips}</p></div>
+    </section>
+
+    <section>
       <h2>精選醫案</h2>
       <p class="section-note">從歷年診間紀錄中選出的代表性案例，帶您認識我的診療思路。</p>
       <ul class="article-list">
 {featured_items}
       </ul>
-    </section>
-
-    <section>
-      <h2>依症狀・部位找文章</h2>
-      <div class="browse"><p>{symptom_chips}</p></div>
     </section>
 
     <section>
