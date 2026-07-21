@@ -272,6 +272,12 @@ footer.site-footer {
   letter-spacing: 0.1em;
 }
 
+.section-note {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: -0.5rem 0 1rem;
+}
+
 .notice {
   background: var(--surface);
   border: 1px dashed var(--accent-warm);
