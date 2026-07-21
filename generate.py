@@ -21,7 +21,7 @@ POSTS_JSON = EXPORT / "this_profile's_activity_across_facebook/posts/profile_pos
 MEDIA_OUT = SITE / "images/posts"
 ARTICLES = SITE / "articles"
 
-SITE_URL = "https://erictcssh-ui.github.io"  # 換自有網域時改這裡再重跑
+SITE_URL = "https://tcmdrerichuang.com"
 SITE_TITLE = "中醫師 黃彥鈞"
 SUBTITLE = "中醫徒手・內針傷整合・精準全人醫療"
 COPYRIGHT = "© 2026 中醫師 黃彥鈞・本站內容為衛教知識分享，不能取代實際診療"
