@@ -155,8 +155,35 @@ table.schedule td.slot strong { color: var(--ink); display: block; }
 .chip.dongmen { background: #4c8a74; }
 .legend { font-size: 0.85rem; color: var(--ink-soft); margin: 0.6rem 0 0; }
 .legend .chip { margin-right: 0.4em; }
-.clinic-info { margin-top: 1.2rem; }
-.clinic-info p { margin: 0.4rem 0; }
+.clinic-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+@media (max-width: 600px) {
+  .clinic-cards { grid-template-columns: 1fr; }
+}
+.clinic-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+}
+.clinic-card h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.05rem;
+  color: var(--accent);
+}
+.clinic-card ul { list-style: none; margin: 0; padding: 0; }
+.clinic-card li {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.clinic-card li .k { color: var(--ink-soft); flex-shrink: 0; }
 .hero p { color: var(--ink-soft); }
 
 a.cta {
@@ -200,14 +227,19 @@ a.cta:hover { background: var(--accent-warm); }
   display: inline-block;
   text-decoration: none;
   margin-right: 0.35em;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  line-height: 1.6;
   color: var(--accent-warm);
   border: 1px solid var(--accent-warm);
   border-radius: 999px;
-  padding: 0 0.6em;
+  padding: 0.05em 0.55em;
   margin-left: 0.5em;
   vertical-align: middle;
 }
+/* 首頁標籤雲：標籤本身是主要內容，維持較大字級 */
+.browse .tag { font-size: 0.8rem; }
+/* 文章列表卡片內的標籤：蓋過 .article-list a 的標題字級與粗體 */
+.article-list a.tag { font-size: 0.7rem; font-weight: 400; }
 
 article.post .post-meta {
   color: var(--ink-soft);

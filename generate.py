@@ -260,6 +260,17 @@ def make_title(text, date):
     return first or f"{date} 貼文"
 
 
+def make_excerpt(text):
+    """摘要去掉開頭的【標題】前綴（列表頁標題已顯示，避免重複），再取前 80 字。"""
+    src = text.strip()
+    if src.startswith("【"):
+        end = src.find("】", 0, 60)
+        if end != -1:
+            src = src[end + 1 :].lstrip(" 　\n")
+    src = src.replace("\n", " ")
+    return src[:80] + ("…" if len(src) > 80 else "")
+
+
 def paragraphs(text):
     blocks = [b.strip() for b in text.split("\n\n") if b.strip()]
     return "\n".join(
@@ -490,7 +501,7 @@ def main():
             dict(
                 date=date, slug=slug, text=text, media=media,
                 title=make_title(text, date),
-                excerpt=text.replace("\n", " ")[:80] + ("…" if len(text) > 80 else ""),
+                excerpt=make_excerpt(text),
                 category=CATEGORY_OVERRIDES.get(slug, classify(text)),
                 tags=TAG_OVERRIDES.get(slug, find_tags(text)),
             )
