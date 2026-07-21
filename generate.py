@@ -779,13 +779,7 @@ def main():
         encoding="utf-8",
     )
 
-    # 首頁（含「依症狀・部位找文章」：列症狀與部位兩個維度）
-    home_tag_names = [n for gname, g in TAG_GROUPS if gname in ("症狀", "部位") for n in g]
-    symptom_chips = "".join(
-        f'<a class="tag" href="articles/tag-{n}.html">{n}（{tag_counts[n]}）</a>'
-        for n in sorted(home_tag_names, key=lambda x: -tag_counts.get(x, 0))
-        if tag_counts.get(n)
-    )
+    # 首頁：精選醫案＋最新文章（標籤瀏覽/搜尋統一放文章頁，避免功能重複）
     home_items = listing_items(entries[:5], link_prefix="articles/")
     by_slug = {e["slug"]: e for e in entries}
     featured = [by_slug[s] for s in FEATURED_POSTS if s in by_slug]
@@ -801,16 +795,12 @@ def main():
     </section>
 
     <section>
-      <h2>依症狀・部位找文章</h2>
-      <div class="browse"><p>{symptom_chips}</p></div>
-    </section>
-
-    <section>
       <h2>精選醫案</h2>
       <p class="section-note">從歷年診間紀錄中選出的代表性案例，帶您認識我的診療思路。</p>
       <ul class="article-list">
 {featured_items}
       </ul>
+      <p class="section-note">想找特定症狀的相關文章？<a href="articles/index.html">到文章頁依症狀搜尋 →</a></p>
     </section>
 
     <section>
