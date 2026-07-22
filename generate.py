@@ -400,6 +400,8 @@ def footer_html(p):
     <nav class="footer-nav">
       <a href="{p}index.html">首頁</a>
       <a href="{p}articles/index.html">文章</a>
+      <a href="{p}services.html">診療項目</a>
+      <a href="{p}faq.html">初診須知</a>
       <a href="{p}clinic.html">門診資訊</a>
       <a href="{p}about.html">關於醫師</a>
       <a href="{p}feed.xml">RSS</a>
@@ -418,6 +420,8 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
     nav = {
         "index": (f"{css_prefix}index.html", "首頁"),
         "articles": (f"{css_prefix}articles/index.html", "文章"),
+        "services": (f"{css_prefix}services.html", "診療項目"),
+        "faq": (f"{css_prefix}faq.html", "初診須知"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
     }
@@ -915,7 +919,7 @@ def main():
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in ["", "articles/index.html", "clinic.html", "about.html"]:
+    for p in ["", "articles/index.html", "services.html", "faq.html", "clinic.html", "about.html"]:
         sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
     for e in entries:
         sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
