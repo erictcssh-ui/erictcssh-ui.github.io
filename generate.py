@@ -9,6 +9,7 @@
 import hashlib
 import json
 import html
+import re
 import shutil
 import datetime
 from pathlib import Path
@@ -66,6 +67,7 @@ TAG_GROUPS = [
         "薦髂關節": ["薦髂"],
         "尾椎": ["尾椎", "尾骨", "尾骶"],
         "膝蓋": ["膝蓋", "膝痛", "膝關節"],
+        "髖・腹股溝": ["髖關節", "髖部", "腹股溝", "鼠蹊"],
         "手肘・手腕": ["網球肘", "高爾夫球肘", "媽媽手", "手腕", "手肘", "板機指"],
         "足・踝": ["足底筋膜", "腳踝", "足弓", "足跟", "拇趾"],
         "顳顎關節": ["顳顎"],
@@ -162,6 +164,8 @@ CATEGORY_OVERRIDES = {
     "post-2023-08-22": "中醫衛教",       # 整脊屬醫療行為之安全宣導
     "post-2024-03-23": "中醫衛教",       # 顱初結構還原：顱骨系統衛教長文
     "post-2025-05-07": "中醫衛教",       # 「喀」之前先排除風險之安全宣導
+    # ── 網站原生新文章 ──
+    "post-2026-07-22": "中醫衛教",       # 髖關節夾擠與發炎衛教（首篇原生文章）
     # ── 2026-07-21 醫案/衛教全量複審（醫師核可）：關鍵字誤入醫案/衛教者歸位 ──
     "post-2023-05-09": "醫案分享",       # 國中生步態分析案（原誤入衛教）
     "post-2024-08-15": "中醫衛教",       # 「治療＋訓練」理念衛教（原誤入醫案）
@@ -608,12 +612,41 @@ def main():
             )
         )
 
+    # 網站原生新文章（2026-07-22 起）：posts/YYYY-MM-DD*.txt，檔案內容即內文
+    # （首行可用【標題】格式）；同名資料夾內的圖片／影片為附圖，依檔名排序，
+    # 檔名需全站唯一（建議用日期開頭）。與 FB 匯出舊文共用分類/標籤/標題/摘要核定管線。
+    posts_dir = SITE / "posts"
+    if posts_dir.exists():
+        for f in sorted(posts_dir.glob("*.txt")):
+            m = re.match(r"(\d{4}-\d{2}-\d{2})", f.stem)
+            text = f.read_text(encoding="utf-8").strip()
+            if not m or not text:
+                continue
+            date = m.group(1)
+            day_counter[date] = day_counter.get(date, 0) + 1
+            slug = f"post-{date}" + (f"-{day_counter[date]}" if day_counter[date] > 1 else "")
+            media_dir = posts_dir / f.stem
+            media = []
+            if media_dir.is_dir():
+                media = [(str(p), p.suffix.lower() in (".mp4", ".mov"))
+                         for p in sorted(media_dir.iterdir())
+                         if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".mp4", ".mov")]
+            entries.append(
+                dict(
+                    date=date, slug=slug, text=text, media=media,
+                    title=TITLE_OVERRIDES.get(slug) or make_title(text, date),
+                    excerpt=EXCERPT_OVERRIDES.get(slug) or make_excerpt(text),
+                    category=CATEGORY_OVERRIDES.get(slug, classify(text)),
+                    tags=TAG_OVERRIDES.get(slug, find_tags(text)),
+                )
+            )
+
     # 第二輪：寫文章頁（媒體複製＋壓縮、麵包屑、JSON-LD、CTA、延伸閱讀）
     compressed = 0
     for e in entries:
         media_html, first_image = [], None
         for uri, is_video in e["media"]:
-            src = EXPORT / uri
+            src = Path(uri) if Path(uri).is_absolute() else EXPORT / uri
             if not src.exists():
                 continue
             dest = MEDIA_OUT / src.name
@@ -937,9 +970,8 @@ def main():
         f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8"
     )
 
-    # 靜態頁（about/clinic）的 CSS 連結同步帶上版本號
-    import re
-    for name in ["about.html", "clinic.html"]:
+    # 靜態頁的 CSS 連結同步帶上版本號
+    for name in ["about.html", "clinic.html", "services.html", "faq.html"]:
         fp = SITE / name
         if fp.exists():
             s = fp.read_text(encoding="utf-8")
