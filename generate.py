@@ -979,6 +979,17 @@ def main():
             if s2 != s:
                 fp.write_text(s2, encoding="utf-8")
 
+    # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
+    from urllib.parse import unquote
+    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html"]:
+        fp = SITE / name
+        if not fp.exists():
+            continue
+        for href in re.findall(r'href="articles/((?:tag|cat)-[^"]+\.html)"',
+                               fp.read_text(encoding="utf-8")):
+            if not (ARTICLES / unquote(href)).exists():
+                print(f"⚠ 斷鏈警告：{name} → articles/{href} 不存在")
+
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
     print(f"本次新壓縮圖片：{compressed} 張")
     print("分類：", {k: v for k, v in cat_counts.items()})
