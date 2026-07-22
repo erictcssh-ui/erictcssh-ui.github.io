@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<rect width="1600" height="900" fill="#faf8f3"/>
+<text x="800" y="88" font-family="PingFang TC, Heiti TC, sans-serif" font-size="52" font-weight="600" fill="#2b2b28" text-anchor="middle">髖部卡卡、腹股溝痛？——從代償到恢復</text>
+<rect x="50" y="130" width="470" height="680" rx="20" fill="#ffffff" stroke="#e5e1d6" stroke-width="2"/><circle cx="96" cy="184" r="24" fill="#6b6a63"/><text x="96" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#fff" text-anchor="middle">1</text><text x="136" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="34" font-weight="600" fill="#6b6a63">為什麼會卡？</text>
+<rect x="565" y="130" width="470" height="680" rx="20" fill="#ffffff" stroke="#e5e1d6" stroke-width="2"/><circle cx="611" cy="184" r="24" fill="#2f5d50"/><text x="611" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#fff" text-anchor="middle">2</text><text x="651" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="34" font-weight="600" fill="#2f5d50">找出源頭，雙管齊下</text>
+<rect x="1080" y="130" width="470" height="680" rx="20" fill="#ffffff" stroke="#e5e1d6" stroke-width="2"/><circle cx="1126" cy="184" r="24" fill="#4a7a6a"/><text x="1126" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#fff" text-anchor="middle">3</text><text x="1166" y="196" font-family="PingFang TC, Heiti TC, sans-serif" font-size="34" font-weight="600" fill="#4a7a6a">校正回歸，恢復靈活</text>
+<path d="M532,460 L554,475 L532,490" fill="none" stroke="#6b6a63" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1047,460 L1069,475 L1047,490" fill="none" stroke="#6b6a63" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="190" y1="460" x2="360" y2="460" stroke="#e5e1d6" stroke-width="10" stroke-linecap="round"/>
+<line x1="200" y1="460" x2="200" y2="545" stroke="#e5e1d6" stroke-width="10" stroke-linecap="round"/>
+<line x1="345" y1="460" x2="345" y2="545" stroke="#e5e1d6" stroke-width="10" stroke-linecap="round"/>
+<line x1="190" y1="460" x2="190" y2="315" stroke="#e5e1d6" stroke-width="10" stroke-linecap="round"/>
+<circle cx="303" cy="272" r="26" fill="none" stroke="#2b2b28" stroke-width="10"/>
+<path d="M293,298 Q240,360 255,448" fill="none" stroke="#2b2b28" stroke-width="11" stroke-linecap="round"/>
+<path d="M255,448 L327,448 L327,535" fill="none" stroke="#2b2b28" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="261.2,427.3 261.3,439.4 273.7,443.0 261.1,448.1 260.6,461.7 251.9,449.4 237.0,451.8 246.4,441.8 241.3,429.3 252.4,435.7" fill="#d98a3a"/>
+<path d="M213,290 Q195,320 213,350" fill="none" stroke="#b0533a" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+<path d="M193,298 Q171,320 193,342" fill="none" stroke="#b0533a" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<text x="90" y="600" font-family="PingFang TC, Heiti TC, sans-serif" font-size="31" font-weight="600" fill="#2b2b28">久坐不動・長期姿勢不良</text>
+<text x="90" y="646" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="400" fill="#6b6a63">↓ 代償一點一點累積</text>
+<text x="90" y="692" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="400" fill="#6b6a63">↓ 腰椎僵硬、骨盆歪斜</text>
+<text x="90" y="738" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="400" fill="#6b6a63">↓ 髖關節不正常摩擦・夾擠</text>
+<text x="90" y="784" font-family="PingFang TC, Heiti TC, sans-serif" font-size="31" font-weight="600" fill="#b0533a">腹股溝、臀外側痠痛發炎</text>
+<path d="M740.8,303.6 L750.3,308.2 L748.4,315.2 L738.0,314.5 L732.2,323.6 L731.9,324.0 L736.8,333.2 L731.2,337.8 L723.1,331.1 L713.1,335.1 L712.7,335.2 L711.2,345.6 L704.0,346.0 L701.4,335.8 L690.9,333.1 L690.5,333.0 L683.2,340.5 L677.2,336.6 L681.0,326.9 L674.1,318.5 L673.9,318.1 L663.6,320.0 L661.0,313.3 L669.8,307.7 L669.1,296.9 L669.2,296.4 L659.7,291.8 L661.6,284.8 L672.0,285.5 L677.8,276.4 L678.1,276.0 L673.2,266.8 L678.8,262.2 L686.9,268.9 L696.9,264.9 L697.3,264.8 L698.8,254.4 L706.0,254.0 L708.6,264.2 L719.1,266.9 L719.5,267.0 L726.8,259.5 L732.8,263.4 L729.0,273.1 L735.9,281.5 L736.1,281.9 L746.4,280.0 L749.0,286.7 L740.2,292.3 L740.9,303.1 Z" fill="#4a7a6a" stroke="#4a7a6a" stroke-width="4" stroke-linejoin="round"/><circle cx="705" cy="300" r="13.68" fill="#faf8f3"/>
+<path d="M750.9,414.6 L762.6,419.1 L761.3,426.7 L748.8,427.0 L744.0,438.0 L743.8,438.4 L752.0,447.8 L747.3,453.9 L736.2,448.4 L726.8,456.0 L726.4,456.2 L729.3,468.4 L722.3,471.6 L715.0,461.5 L703.2,463.8 L702.7,463.9 L699.7,476.0 L691.9,475.6 L690.2,463.2 L678.6,459.8 L678.2,459.6 L669.8,469.0 L663.2,465.0 L667.4,453.3 L658.7,444.9 L658.4,444.5 L646.7,448.9 L642.6,442.3 L651.8,433.8 L648.1,422.4 L648.0,421.9 L635.6,420.4 L635.0,412.7 L647.1,409.4 L649.1,397.5 L649.2,397.0 L638.9,389.9 L642.0,382.8 L654.2,385.6 L661.5,376.0 L661.8,375.6 L656.1,364.5 L662.1,359.7 L671.6,367.8 L682.5,362.7 L683.0,362.5 L683.0,350.0 L690.6,348.6 L695.3,360.1 L707.3,360.7 L707.8,360.8 L713.7,349.7 L721.1,351.9 L719.8,364.4 L730.2,370.4 L730.6,370.7 L740.9,363.7 L746.5,369.1 L739.6,379.5 L746.0,389.7 L746.2,390.2 L758.6,388.7 L761.0,396.0 L750.0,402.1 L751.0,414.1 Z" fill="#2f5d50" stroke="#2f5d50" stroke-width="4" stroke-linejoin="round"/><circle cx="699" cy="412" r="19.76" fill="#faf8f3"/>
+<path d="M708.1,552.7 L717.3,559.6 L714.0,566.6 L702.8,563.8 L695.1,572.6 L694.7,572.9 L698.7,583.7 L692.2,587.8 L684.3,579.4 L673.0,582.6 L672.5,582.6 L670.1,593.9 L662.4,593.8 L660.3,582.5 L649.0,579.1 L648.6,578.9 L640.4,587.0 L634.0,582.8 L638.4,572.1 L630.8,563.1 L630.5,562.7 L619.2,565.2 L616.1,558.1 L625.6,551.5 L624.0,539.9 L624.0,539.4 L613.2,535.4 L614.4,527.8 L625.9,527.3 L630.9,516.6 L631.2,516.2 L624.2,507.0 L629.4,501.3 L639.3,507.1 L649.3,500.8 L649.7,500.6 L648.9,489.1 L656.3,487.1 L661.5,497.4 L673.2,497.5 L673.7,497.5 L679.2,487.4 L686.6,489.7 L685.4,501.1 L695.3,507.6 L695.6,507.9 L705.7,502.4 L710.7,508.3 L703.5,517.3 L708.3,528.0 L708.4,528.5 L719.9,529.3 L720.9,536.9 L710.0,540.6 L708.2,552.2 Z" fill="#b0533a" stroke="#b0533a" stroke-width="4" stroke-linejoin="round"/><circle cx="667" cy="540" r="16.34" fill="#faf8f3"/>
+<polygon points="681.7,466.9 681.7,476.1 691.0,478.7 681.6,482.5 681.2,492.8 674.7,483.5 663.5,485.3 670.5,477.9 666.7,468.4 675.1,473.3" fill="#d98a3a"/>
+<text x="640" y="310" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" font-weight="600" fill="#4a7a6a" text-anchor="end">腰椎</text>
+<text x="622" y="422" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" font-weight="600" fill="#2f5d50" text-anchor="end">骨盆</text>
+<text x="667" y="634" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" font-weight="600" fill="#b0533a" text-anchor="middle">髖關節</text>
+<text x="850" y="300" font-family="PingFang TC, Heiti TC, sans-serif" font-size="32" font-weight="600" fill="#2f5d50">徒手治療</text>
+<text x="850" y="345" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" fill="#6b6a63">理順緊繃張力，</text>
+<text x="850" y="385" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" fill="#6b6a63">讓骨盆與髖回到正位</text>
+<text x="850" y="470" font-family="PingFang TC, Heiti TC, sans-serif" font-size="32" font-weight="600" fill="#b0533a">針刺放鬆</text>
+<text x="850" y="512" font-family="PingFang TC, Heiti TC, sans-serif" font-size="26" fill="#6b6a63">（針灸・乾針）</text>
+<text x="850" y="552" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" fill="#6b6a63">解除深層肌肉的</text>
+<text x="850" y="592" font-family="PingFang TC, Heiti TC, sans-serif" font-size="27" fill="#6b6a63">緊繃與沾黏</text>
+
+
+<text x="655" y="700" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="600" fill="#2b2b28">先確認無骨骼、韌帶撕裂傷，</text>
+<text x="655" y="742" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="600" fill="#2b2b28">不只治痛點，而是校正整組齒輪</text>
+<circle cx="1300" cy="295" r="27" fill="none" stroke="#2b2b28" stroke-width="10"/>
+<path d="M1300,322 L1294,430" fill="none" stroke="#2b2b28" stroke-width="11" stroke-linecap="round"/>
+<path d="M1296,350 L1238,408" fill="none" stroke="#2b2b28" stroke-width="10" stroke-linecap="round"/>
+<path d="M1296,350 L1358,386" fill="none" stroke="#2b2b28" stroke-width="10" stroke-linecap="round"/>
+<path d="M1294,430 L1242,530 L1252,550" fill="none" stroke="#2b2b28" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1294,430 L1352,508 L1382,528" fill="none" stroke="#2b2b28" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1150,356.0 A60,60 0 0 0 1171.0,445" fill="none" stroke="#4a7a6a" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+<path d="M1150,346.4 A84,84 0 0 0 1179.4,445" fill="none" stroke="#4a7a6a" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+<path d="M1150,336.8 A108,108 0 0 0 1187.8,445" fill="none" stroke="#4a7a6a" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+<circle cx="1420" cy="280" r="30" fill="#2f5d50"/>
+<path d="M1406,280 L1417,292 L1437,266" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1130" y="620" font-family="PingFang TC, Heiti TC, sans-serif" font-size="31" font-weight="600" fill="#2b2b28">蹲得下去、盤得了腿</text>
+<text x="1130" y="668" font-family="PingFang TC, Heiti TC, sans-serif" font-size="31" font-weight="600" fill="#2b2b28">走路輕鬆、腿有力</text>
+<text x="1130" y="716" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="600" fill="#2f5d50">別忽略微小的痠痛訊號，</text>
+<text x="1130" y="764" font-family="PingFang TC, Heiti TC, sans-serif" font-size="28" font-weight="600" fill="#2f5d50">及早找出源頭校正</text>
+<text x="1540" y="868" font-family="PingFang TC, Heiti TC, sans-serif" font-size="24" fill="#6b6a63" text-anchor="end" letter-spacing="2">中醫師 黃彥鈞・tcmdrerichuang.com</text>
+</svg>
