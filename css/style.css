@@ -59,7 +59,7 @@ nav.site-nav {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 0.5rem 1.8rem;  /* 五項在窄螢幕折行時，行距收緊 */
   flex-wrap: wrap;
 }
 nav.site-nav a {
