@@ -224,6 +224,19 @@ TITLE_OVERRIDES = {
     "post-2025-11-07": "二十年的舊疤痕，輕柔手法後的變化：疤痕處理與手指關節痛",
 }
 
+# 人工核定摘要（2026-07-22）：精選醫案的列表摘要／meta 描述／RSS 摘要，
+# 取代自動「取內文前80字」的 FB 口吻開頭；內文不動。
+EXCERPT_OVERRIDES = {
+    "post-2024-12-19-2": "產後一個月的媽媽尾椎痛到坐不住，觸診發現尾椎本身並無異狀——問題出在薦髂關節與腰薦結構的失能，徒手與針灸並用的診療紀錄。",
+    "post-2025-02-24-2": "臀腿痛數月、連坐著都困難，評估發現剖腹產疤痕抑制了核心肌群的發力；鬆解疤痕後，連脹氣困擾也一併改善的一次紀錄。",
+    "post-2025-03-06": "產後單側臉浮腫、右眼瞼略下垂，源頭在僵硬肩頸限制了顱頸連動與體液循環；徒手鬆解後臉部消腫的過程紀錄。",
+    "post-2026-01-17": "檢查都正常，卻反覆頭痛、暈眩、耳鳴？認識脖子前側的胸鎖乳突肌（SCM）——轉移痛的「偽裝大師」，以及精準、安全處理它的方式。",
+    "post-2025-03-19": "手麻六年、麻到影響睡眠，卻不是頸椎壓迫；從肩胛與下背肌群的失能找到源頭，標本並治的診療思路。",
+    "post-2025-05-14": "每週發作的長年頭痛，內科調理始終無法斷根；從高位頸椎與相關肌群切入處理後，兩週未再發作的變化紀錄。",
+    "post-2024-12-12": "睡不好二十多年、身心俱疲，問診與脈象指向睡眠呼吸中止；重新檢測並調整呼吸器參數後終於一夜好眠的跨科協作紀錄。",
+    "post-2024-04-14": "從懷孕開始、持續六七年的耳鳴耳悶，各處求醫未果；從顱骨排列與顳骨結構切入治療的過程與患者回饋。",
+}
+
 # 首頁精選醫案（2026-07-21 醫師核可）：呈現診療風格的代表性紀錄
 FEATURED_POSTS = [
     "post-2024-12-19-2",   # 尾椎痛不調尾椎（產後薦髂）
@@ -441,6 +454,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
   <title>{html.escape(full_title)}</title>
   {GA_SNIPPET}
   {head_html}{extra_head}
+  <link rel="stylesheet" href="{css_prefix}css/fonts.css">
   <link rel="stylesheet" href="{css_prefix}css/style.css?v={CSS_V}">
 </head>
 <body>
@@ -584,7 +598,7 @@ def main():
             dict(
                 date=date, slug=slug, text=text, media=media,
                 title=TITLE_OVERRIDES.get(slug) or make_title(text, date),
-                excerpt=make_excerpt(text),
+                excerpt=EXCERPT_OVERRIDES.get(slug) or make_excerpt(text),
                 category=CATEGORY_OVERRIDES.get(slug, classify(text)),
                 tags=TAG_OVERRIDES.get(slug, find_tags(text)),
             )
@@ -810,7 +824,35 @@ def main():
 {home_items}
       </ul>
       <p><a href="articles/index.html">查看全部 {len(entries)} 篇文章 →</a></p>
-    </section>"""
+    </section>
+
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@graph": [
+        {{
+          "@type": "WebSite",
+          "name": "{SITE_TITLE}",
+          "url": "{SITE_URL}/",
+          "inLanguage": "zh-Hant",
+          "description": "{SUBTITLE}。中醫衛教文章、醫案分享與門診資訊。"
+        }},
+        {{
+          "@type": "Physician",
+          "name": "黃彥鈞",
+          "alternateName": "中醫師 黃彥鈞",
+          "url": "{SITE_URL}/",
+          "image": "{SITE_URL}/images/portrait.jpg",
+          "medicalSpecialty": ["中醫", "肌筋膜疼痛", "乾針", "徒手治療"],
+          "sameAs": ["{FB_URL}", "{IG_URL}"],
+          "worksFor": [
+            {{"@type": "MedicalClinic", "name": "太初中醫診所", "telephone": "+886-2-2777-5800", "address": {{"@type": "PostalAddress", "streetAddress": "復興北路92號6F-1", "addressLocality": "台北市中山區", "addressCountry": "TW"}}}},
+            {{"@type": "MedicalClinic", "name": "東門中醫診所", "telephone": "+886-2-2343-2000", "address": {{"@type": "PostalAddress", "streetAddress": "連雲街81號2樓", "addressLocality": "台北市中正區", "addressCountry": "TW"}}}}
+          ]
+        }}
+      ]
+    }}
+    </script>"""
     (SITE / "index.html").write_text(
         page("首頁", home_body, css_prefix="", current="index",
              desc=f"{SITE_TITLE}個人網站：{SUBTITLE}。中醫衛教文章、醫案分享與門診資訊。",
@@ -826,6 +868,7 @@ def main():
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>找不到頁面｜{SITE_TITLE}</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
