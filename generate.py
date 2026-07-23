@@ -268,6 +268,12 @@ FEATURED_POSTS = [
     "post-2024-04-14",     # 耳鳴六七年（顱骨結構）
 ]
 
+# 副分類（2026-07-23）：文章同時屬於第二分類——會列入該分類頁、文章頁顯示雙膠囊；
+# 麵包屑、列表卡片與統計仍以主分類為準
+EXTRA_CATEGORIES = {
+    "post-2026-07-22": ["醫案分享"],   # 髖夾擠：衛教框架＋診療紀錄（醫師核定雙分類）
+}
+
 # 過期時效性公告／漏網轉發，人工列管移除（依 2026-07-17 過濾原則；自動規則未攔到）
 EXCLUDE_POSTS = {
     "post-2023-03-04",   # 2023.03 月門診表
@@ -500,9 +506,10 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
 
 
 def chip_links(category=None, tags=(), prefix=""):
+    cats = category if isinstance(category, (list, tuple)) else ([category] if category else [])
     parts = []
-    if category:
-        parts.append(f'<a class="tag" href="{prefix}cat-{category}.html">{category}</a>')
+    for c in cats:
+        parts.append(f'<a class="tag" href="{prefix}cat-{c}.html">{c}</a>')
     for t in tags:
         parts.append(f'<a class="tag" href="{prefix}tag-{t}.html">{t}</a>')
     return "".join(parts)
@@ -704,7 +711,7 @@ def main():
 
     <article class="post">
       <h1>{html.escape(e['title'])}</h1>
-      <p class="post-meta">{e['date']}　{chip_links(e['category'], e['tags'])}</p>
+      <p class="post-meta">{e['date']}　{chip_links([e['category']] + EXTRA_CATEGORIES.get(e['slug'], []), e['tags'])}</p>
 {paragraphs(e['text'])}
 {chr(10).join(media_html)}
     </article>
@@ -728,7 +735,8 @@ def main():
     cat_names = [c[0] for c in CATEGORIES] + [FALLBACK_CATEGORY]
     cat_counts = {}
     for name in cat_names:
-        subset = [e for e in entries if e["category"] == name]
+        subset = [e for e in entries
+                  if name in [e["category"]] + EXTRA_CATEGORIES.get(e["slug"], [])]
         cat_counts[name] = len(subset)
         if not subset:
             continue
@@ -973,7 +981,8 @@ def main():
         sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
     for n in cat_names:
         if cat_counts[n]:
-            sub = [e["date"] for e in entries if e["category"] == n]
+            sub = [e["date"] for e in entries
+                   if n in [e["category"]] + EXTRA_CATEGORIES.get(e["slug"], [])]
             sitemap.append(url_tag(f"{SITE_URL}/articles/cat-{n}.html", max(sub)))
     for n, c in tag_counts.items():
         if c:
