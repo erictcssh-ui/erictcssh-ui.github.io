@@ -1014,6 +1014,10 @@ def main():
             if not (ARTICLES / unquote(href)).exists():
                 print(f"⚠ 斷鏈警告：{name} → articles/{href} 不存在")
 
+    if entries:
+        e0 = entries[0]
+        print(f"最新文章FB分享連結：{SITE_URL}/articles/{e0['slug']}.html"
+              f"?utm_source=facebook&utm_medium=social&utm_campaign={e0['slug']}")
     print(f"文章數：{len(entries)}（略過 {skipped} 篇）")
     print(f"本次新壓縮圖片：{compressed} 張")
     print("分類：", {k: v for k, v in cat_counts.items()})
