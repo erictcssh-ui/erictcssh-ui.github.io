@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<rect width="1600" height="900" fill="#faf8f3"/>
+<rect x="24" y="24" width="1552" height="852" fill="none" stroke="#e5e1d6" stroke-width="2" rx="18"/>
+<text x="95" y="235" font-family="PingFang TC, Heiti TC, sans-serif" font-size="60" font-weight="600" fill="#2b2b28">慢性疼痛，像剝洋蔥</text>
+<text x="95" y="325" font-family="PingFang TC, Heiti TC, sans-serif" font-size="34" fill="#6b6a63">一層一層拆開代償的偽裝，</text>
+<text x="95" y="380" font-family="PingFang TC, Heiti TC, sans-serif" font-size="34" fill="#6b6a63">才能拆到最核心的病灶。</text>
+<text x="95" y="490" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#4a7a6a">① 徒手治療｜重塑力學、骨盆歸位</text>
+<text x="95" y="545" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#2f5d50">② 乾針｜鬆解表中層的異常張力</text>
+<text x="95" y="600" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#b0533a">③ 超音波導引針刀｜精準拆除深層沾黏</text>
+<text x="95" y="760" font-family="PingFang TC, Heiti TC, sans-serif" font-size="26" fill="#6b6a63" letter-spacing="2">中醫師 黃彥鈞・tcmdrerichuang.com</text>
+<path d="M1084,242 Q1100,160 1126,218 Q1138,150 1172,236" fill="none" stroke="#4a7a6a" stroke-width="14" stroke-linecap="round"/>
+<circle cx="1130" cy="480" r="238" fill="#8fb3a5" opacity="0.45"/>
+<circle cx="1130" cy="480" r="238" fill="none" stroke="#4a7a6a" stroke-width="8"/>
+<circle cx="1130" cy="480" r="160" fill="#8fb3a5" opacity="0.65"/>
+<circle cx="1130" cy="480" r="160" fill="none" stroke="#2f5d50" stroke-width="8"/>
+<circle cx="1130" cy="480" r="84" fill="#f3ece2"/>
+<circle cx="1130" cy="480" r="84" fill="none" stroke="#2f5d50" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round"/>
+<path d="M1092,488 C1100,446 1138,436 1156,464 C1176,492 1148,518 1124,506 C1100,494 1124,462 1146,478 C1160,488 1138,502 1120,490" fill="none" stroke="#b0533a" stroke-width="13" stroke-linecap="round"/>
+<polygon points="1187.1,428.0 1187.1,437.9 1197.2,440.8 1187.0,444.9 1186.5,456.0 1179.5,446.0 1167.4,447.9 1175.0,439.9 1170.9,429.6 1179.9,434.9" fill="#d98a3a"/>
+<polygon points="1374,178 1448,234 1400,256" fill="none" stroke="#6b6a63" stroke-width="4" opacity="0.0"/>
+<path d="M1388,291 A90,90 0 0 0 1347,246" fill="none" stroke="#4a7a6a" stroke-width="6" opacity="0.7" stroke-linecap="round"/>
+<path d="M1369,327 A130,130 0 0 0 1309,261" fill="none" stroke="#4a7a6a" stroke-width="5" opacity="0.49999999999999994" stroke-linecap="round"/>
+<path d="M1350,362 A170,170 0 0 0 1272,276" fill="none" stroke="#4a7a6a" stroke-width="4" opacity="0.29999999999999993" stroke-linecap="round"/>
+<line x1="1430" y1="212" x2="1170" y2="472" stroke="#2b2b28" stroke-width="9" stroke-linecap="round"/>
+<rect x="1416" y="172" width="60" height="52" rx="12" transform="rotate(45 1430 212)" fill="#2b2b28"/>
+<line x1="962" y1="312" x2="874" y2="224" stroke="#6b6a63" stroke-width="2.5"/><text x="868" y="212" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#4a7a6a" text-anchor="end">①</text>
+<line x1="1017" y1="593" x2="922" y2="688" stroke="#6b6a63" stroke-width="2.5"/><text x="916" y="712" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#2f5d50" text-anchor="end">②</text>
+<line x1="1138" y1="520" x2="1090" y2="630" stroke="#6b6a63" stroke-width="2.5"/><text x="1086" y="664" font-family="PingFang TC, Heiti TC, sans-serif" font-size="30" font-weight="600" fill="#b0533a" text-anchor="middle">③</text>
+</svg>
