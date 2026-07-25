@@ -996,7 +996,7 @@ def main():
     )
 
     # 靜態頁的 CSS 連結同步帶上版本號
-    for name in ["about.html", "clinic.html", "services.html", "faq.html"]:
+    for name in ["about.html", "clinic.html", "services.html", "faq.html", "courses.html"]:
         fp = SITE / name
         if fp.exists():
             s = fp.read_text(encoding="utf-8")
@@ -1006,7 +1006,7 @@ def main():
 
     # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
     from urllib.parse import unquote
-    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html"]:
+    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
