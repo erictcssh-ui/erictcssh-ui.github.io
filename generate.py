@@ -428,7 +428,7 @@ def footer_html(p):
       <a href="{p}articles/index.html">文章</a>
       <a href="{p}services.html">診療項目</a>
       <a href="{p}faq.html">初診須知</a>
-      <a href="{p}courses.html">課程</a>
+      <a href="{p}courses.html">工作坊</a>
       <a href="{p}clinic.html">門診資訊</a>
       <a href="{p}about.html">關於醫師</a>
       <a href="{p}feed.xml">RSS</a>
@@ -449,7 +449,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         "articles": (f"{css_prefix}articles/index.html", "文章"),
         "services": (f"{css_prefix}services.html", "診療項目"),
         "faq": (f"{css_prefix}faq.html", "初診須知"),
-        "courses": (f"{css_prefix}courses.html", "課程"),
+        "courses": (f"{css_prefix}courses.html", "工作坊"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
     }
