@@ -461,6 +461,22 @@ a.cta.line:hover { background: #05a648; }
   margin-right: 0.3em;
   letter-spacing: 0.03em;
 }
-.dgsa-stars { color: #b0533a; letter-spacing: 0.1em; }
+.dgsa-stars { color: var(--accent-warm); letter-spacing: 0.1em; }
 .dgsa-stars .off { color: var(--border); }
 .dgsa-medal { margin-left: 0.15em; }
+
+/* 課程頁：招生卡片標題層級（p.級距選擇器蓋過 .cta-box p） */
+p.course-kicker {
+  color: var(--accent-warm);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin: 0 0 0.3rem;
+}
+p.course-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.4;
+  margin: 0 0 1.1rem;
+}
