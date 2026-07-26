@@ -438,12 +438,12 @@ def footer_html(p):
     <p class="footer-social">
       <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>・
       <a href="{IG_URL}" target="_blank" rel="noopener">Instagram</a></p>
-    <p>{COPYRIGHT}</p>
+    <p>{COPYRIGHT}・<a href="{p}privacy.html">隱私權與免責聲明</a></p>
   </footer>"""
 
 
 def page(title, body, css_prefix="../", current="articles", desc=None,
-         url_path=None, og_image=None, extra_head=""):
+         url_path=None, og_image=None, extra_head="", published=None):
     nav = {
         "index": (f"{css_prefix}index.html", "首頁"),
         "articles": (f"{css_prefix}articles/index.html", "文章"),
@@ -473,10 +473,23 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         f'<meta property="og:url" content="{html.escape(og_url)}">',
         f'<meta property="og:image" content="{html.escape(og_img)}">',
         f'<meta property="og:site_name" content="{SITE_TITLE}">',
+        '<meta property="og:locale" content="zh_TW">',
         '<meta name="twitter:card" content="summary_large_image">',
         f'<link rel="icon" type="image/svg+xml" href="{css_prefix}favicon.svg">',
+        f'<link rel="apple-touch-icon" href="{css_prefix}apple-touch-icon.png">',
+        f'<link rel="manifest" href="{css_prefix}site.webmanifest">',
+        '<meta name="theme-color" content="#2f5d50">',
         f'<link rel="alternate" type="application/rss+xml" title="{SITE_TITLE}" href="{css_prefix}feed.xml">',
     ]
+    og_dims = img_dims(SITE / (og_image or COVER))
+    if og_dims:
+        head_extra += [
+            f'<meta property="og:image:width" content="{og_dims[0]}">',
+            f'<meta property="og:image:height" content="{og_dims[1]}">',
+        ]
+    if published:
+        head_extra.append(
+            f'<meta property="article:published_time" content="{published}">')
     head_html = "\n  ".join(head_extra)
     return f"""<!DOCTYPE html>
 <html lang="zh-Hant">
@@ -666,7 +679,18 @@ def main():
                 )
             )
 
-    # 第二輪：寫文章頁（媒體複製＋壓縮、麵包屑、JSON-LD、CTA、延伸閱讀）
+    # 排序後建「同分類上一篇/下一篇」對照表（新→舊）
+    entries.sort(key=lambda e: e["date"], reverse=True)
+    by_cat = {}
+    for e in entries:
+        by_cat.setdefault(e["category"], []).append(e)
+    neighbors = {}
+    for lst in by_cat.values():
+        for i, e in enumerate(lst):
+            neighbors[e["slug"]] = (lst[i - 1] if i > 0 else None,
+                                    lst[i + 1] if i + 1 < len(lst) else None)
+
+    # 第二輪：寫文章頁（媒體複製＋壓縮、麵包屑、JSON-LD、作者框、CTA、前後篇、延伸閱讀）
     compressed = 0
     for e in entries:
         media_html, first_image = [], None
@@ -694,6 +718,21 @@ def main():
                 if first_image is None:
                     first_image = f"images/posts/{src.name}"
 
+        newer, older = neighbors[e["slug"]]
+        nav_links = []
+        if newer:
+            nav_links.append(
+                f'<a class="newer" href="{newer["slug"]}.html">'
+                f'<span class="dir">‹ 較新一篇</span>{html.escape(newer["title"])}</a>')
+        if older:
+            nav_links.append(
+                f'<a class="older" href="{older["slug"]}.html">'
+                f'<span class="dir">較舊一篇 ›</span>{html.escape(older["title"])}</a>')
+        post_nav_html = (
+            f'\n\n    <nav class="post-nav" aria-label="同分類前後篇">\n      '
+            + "\n      ".join(nav_links) + "\n    </nav>"
+        ) if nav_links else ""
+
         related = related_entries(e, entries)
         related_html = ""
         if related:
@@ -719,19 +758,28 @@ def main():
 {chr(10).join(media_html)}
     </article>
 
+    <aside class="author-box">
+      <img src="../images/portrait-square.jpg" alt="黃彥鈞 中醫師" width="320" height="320" loading="lazy">
+      <div>
+        <p class="author-name">文｜黃彥鈞 中醫師</p>
+        <p class="author-desc">太初中醫・東門中醫醫師，擅長以乾針與徒手治療處理肌筋膜疼痛與結構問題，並以針藥併用調理內科病症。本文為衛教知識分享，實際診斷與治療請以門診評估為準。</p>
+        <p class="author-more"><a href="../about.html">認識醫師與完整資歷 →</a></p>
+      </div>
+    </aside>
+
     <div class="cta-box">
       <p>有類似的困擾想諮詢？</p>
       <p><a class="cta" href="../clinic.html">📅 門診時間・預約掛號</a>
       <a class="cta line" href="{LINE_URL}" target="_blank" rel="noopener">💬 LINE 線上預約</a></p>
-    </div>{related_html}"""
+    </div>{post_nav_html}{related_html}"""
         (ARTICLES / f"{e['slug']}.html").write_text(
             page(e["title"], body, desc=e["excerpt"],
                  url_path=f"articles/{e['slug']}.html", og_image=first_image,
-                 extra_head=article_jsonld(e, first_image)),
+                 extra_head=article_jsonld(e, first_image),
+                 published=e["date"]),
             encoding="utf-8",
         )
 
-    entries.sort(key=lambda e: e["date"], reverse=True)
     latest_date = entries[0]["date"] if entries else datetime.date.today().isoformat()
 
     # 分類頁
@@ -978,7 +1026,7 @@ def main():
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html"]:
+    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "privacy.html"]:
         sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
     for e in entries:
         sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
@@ -998,7 +1046,7 @@ def main():
     )
 
     # 靜態頁的 CSS 連結同步帶上版本號
-    for name in ["about.html", "clinic.html", "services.html", "faq.html", "courses.html"]:
+    for name in ["about.html", "clinic.html", "services.html", "faq.html", "courses.html", "privacy.html"]:
         fp = SITE / name
         if fp.exists():
             s = fp.read_text(encoding="utf-8")
@@ -1008,7 +1056,7 @@ def main():
 
     # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
     from urllib.parse import unquote
-    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html"]:
+    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
