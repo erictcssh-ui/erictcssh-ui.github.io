@@ -443,3 +443,24 @@ a.cta.line:hover { background: #05a648; }
   color: var(--ink-soft);
   font-size: 0.85rem;
 }
+
+/* DGSA 認證星等（about 頁；星＝官方名錄課程進度，獎牌＝Diploma） */
+.dgsa-rating {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em 1.4em;
+  margin: 0.35em 0 0.15em;
+  flex-wrap: wrap;
+}
+.dgsa-row { white-space: nowrap; }
+.dgsa-verify { font-size: 0.85em; white-space: nowrap; }
+.dgsa-label {
+  font-size: 0.78em;
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 0.3em;
+  letter-spacing: 0.03em;
+}
+.dgsa-stars { color: #b0533a; letter-spacing: 0.1em; }
+.dgsa-stars .off { color: var(--border); }
+.dgsa-medal { margin-left: 0.15em; }
