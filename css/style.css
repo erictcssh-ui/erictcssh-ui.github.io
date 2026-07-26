@@ -480,3 +480,104 @@ p.course-title {
   line-height: 1.4;
   margin: 0 0 1.1rem;
 }
+
+/* ── 肌筋膜 × 經絡對照頁（atlas） ── */
+p.atlas-kicker {
+  color: var(--accent-warm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin: 0 0 0.2rem;
+}
+.atlas-lede {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  border-left: 4px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.2rem 0 1.8rem;
+}
+.atlas-fig {
+  margin: 2rem 0;
+  padding: 0;
+}
+.atlas-fig svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.atlas-fig figcaption {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-top: 0.6rem;
+  line-height: 1.7;
+}
+.fig-credit { display: block; font-size: 0.82rem; opacity: 0.8; }
+
+.atlas-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1.2rem 0;
+  font-size: 0.97rem;
+}
+.atlas-table th, .atlas-table td {
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  vertical-align: top;
+}
+.atlas-table th {
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+  width: 7.5em;
+}
+.atlas-table.wide th { width: auto; }
+.atlas-table .muted { color: var(--ink-soft); font-size: 0.85rem; }
+
+.atlas-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.4rem 0;
+}
+.atlas-compare .col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.3rem 1.2rem;
+}
+.atlas-compare .col h3 {
+  margin: 0.2rem 0 0.6rem;
+  font-size: 1.05rem;
+  padding-left: 0.6rem;
+}
+.atlas-compare .overlap h3 { color: var(--accent); border-left: 4px solid var(--accent); }
+.atlas-compare .diverge h3 { color: var(--accent-warm); border-left: 4px solid var(--accent-warm); }
+.atlas-compare ul { margin: 0; padding-left: 1.1rem; }
+.atlas-compare li { margin: 0.5rem 0; font-size: 0.95rem; }
+@media (max-width: 640px) {
+  .atlas-compare { grid-template-columns: 1fr; }
+}
+
+blockquote .src {
+  text-align: right;
+  font-size: 0.85rem;
+  margin: 0.3rem 0 0;
+}
+
+/* 對照圖：窄螢幕保留可讀字級，圖內橫向捲動（頁面本身不橫捲） */
+@media (max-width: 640px) {
+  .atlas-fig {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .atlas-fig svg { min-width: 620px; }
+  .atlas-fig figcaption { min-width: 0; }
+}
