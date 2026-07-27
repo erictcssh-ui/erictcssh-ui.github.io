@@ -302,18 +302,21 @@ CONDITION_PAGES = {
                                "早上下床第一步最痛，走幾步反而緩解。「長骨刺」並不是腳跟痛的原因。"),
     "hand-numbness.html": ("手麻",
                            "不一定是頸椎壓迫。從頸椎、胸廓出口到腕隧道，沿路有多個可能卡住的位置。"),
+    "leg-length-discrepancy.html": ("長短腳",
+                                    "約九成的長短腳骨頭並沒有比較短，而是骨盆位置跑掉了。買鞋墊前，先分清楚是哪一種。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
 TAG_CONDITIONS = {
-    "骨盆": ["piriformis-syndrome.html", "coccydynia.html", "si-joint-dysfunction.html"],
+    "骨盆": ["si-joint-dysfunction.html", "leg-length-discrepancy.html",
+             "piriformis-syndrome.html", "coccydynia.html"],
     "薦髂關節": ["si-joint-dysfunction.html", "piriformis-syndrome.html", "coccydynia.html"],
     "髖・腹股溝": ["piriformis-syndrome.html", "si-joint-dysfunction.html"],
     "尾椎": ["coccydynia.html", "si-joint-dysfunction.html"],
     "下背・腰": ["si-joint-dysfunction.html", "piriformis-syndrome.html"],
     "顳顎關節": ["tmj-disorder.html"],
     "顱頸整合": ["tmj-disorder.html"],
-    "足・踝": ["plantar-fasciitis.html"],
+    "足・踝": ["plantar-fasciitis.html", "leg-length-discrepancy.html"],
     "肩頸": ["hand-numbness.html"],
     "手肘・手腕": ["hand-numbness.html"],
 }
