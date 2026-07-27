@@ -294,14 +294,28 @@ CONDITION_PAGES = {
                                  "久坐就痛、從椅子起身最痛的臀部深處痠麻，常被當成椎間盤壓迫的坐骨神經痛。"),
     "coccydynia.html": ("尾椎痛",
                         "坐著就痛、站起來反而好一些。影像常看不出問題，而真正的源頭也未必在尾椎本身。"),
+    "si-joint-dysfunction.html": ("薦髂關節障礙",
+                                  "下背痛偏一側、指得出「就是這一點」。上下樓梯與翻身會痛，腰椎影像卻沒異常。"),
+    "tmj-disorder.html": ("顳顎關節障礙",
+                          "張口卡卡、下巴喀喀作響、咀嚼痠痛，甚至連帶耳悶與頭痛。牙齒沒問題，卻還是不舒服。"),
+    "plantar-fasciitis.html": ("足底筋膜炎",
+                               "早上下床第一步最痛，走幾步反而緩解。「長骨刺」並不是腳跟痛的原因。"),
+    "hand-numbness.html": ("手麻",
+                           "不一定是頸椎壓迫。從頸椎、胸廓出口到腕隧道，沿路有多個可能卡住的位置。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
 TAG_CONDITIONS = {
-    "骨盆": ["piriformis-syndrome.html", "coccydynia.html"],
-    "薦髂關節": ["piriformis-syndrome.html", "coccydynia.html"],
-    "髖・腹股溝": ["piriformis-syndrome.html"],
-    "尾椎": ["coccydynia.html"],
+    "骨盆": ["piriformis-syndrome.html", "coccydynia.html", "si-joint-dysfunction.html"],
+    "薦髂關節": ["si-joint-dysfunction.html", "piriformis-syndrome.html", "coccydynia.html"],
+    "髖・腹股溝": ["piriformis-syndrome.html", "si-joint-dysfunction.html"],
+    "尾椎": ["coccydynia.html", "si-joint-dysfunction.html"],
+    "下背・腰": ["si-joint-dysfunction.html", "piriformis-syndrome.html"],
+    "顳顎關節": ["tmj-disorder.html"],
+    "顱頸整合": ["tmj-disorder.html"],
+    "足・踝": ["plantar-fasciitis.html"],
+    "肩頸": ["hand-numbness.html"],
+    "手肘・手腕": ["hand-numbness.html"],
 }
 
 # 主題導言：萃取自醫師歷年文章中的治療觀念（醫師觀點，非診療建議）
