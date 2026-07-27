@@ -314,11 +314,14 @@ CONDITION_PAGES = {
                        "天旋地轉、頭昏飄飄、快要昏倒——這幾種暈的成因完全不同，先分清楚方向才會對。"),
     "shoulder-pain.html": ("肩痛：夾擠與五十肩",
                            "不是所有肩痛都是五十肩。別人幫你抬手臂抬不抬得起來，是最關鍵的分辨。"),
+    "manual-therapy.html": ("骨頭真的會「跑掉」嗎？",
+                            "痛了就是跑掉、喬回去就會好？影像研究顯示徒手治療有效，但機制不是把關節推回原位。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
 TAG_CONDITIONS = {
-    "骨盆": ["si-joint-dysfunction.html", "leg-length-discrepancy.html",
+    "徒手治療": ["manual-therapy.html"],
+    "骨盆": ["si-joint-dysfunction.html", "leg-length-discrepancy.html", "manual-therapy.html",
              "piriformis-syndrome.html", "coccydynia.html"],
     "薦髂關節": ["si-joint-dysfunction.html", "piriformis-syndrome.html", "coccydynia.html"],
     "髖・腹股溝": ["piriformis-syndrome.html", "si-joint-dysfunction.html"],
