@@ -304,6 +304,14 @@ CONDITION_PAGES = {
                            "不一定是頸椎壓迫。從頸椎、胸廓出口到腕隧道，沿路有多個可能卡住的位置。"),
     "leg-length-discrepancy.html": ("長短腳",
                                     "約九成的長短腳骨頭並沒有比較短，而是骨盆位置跑掉了。買鞋墊前，先分清楚是哪一種。"),
+    "neck-pain.html": ("頸痛",
+                       "影像上的退化與突出很常見，卻未必是痛的原因。認識肌肉失衡與影像之間的落差。"),
+    "headache.html": ("頭痛",
+                      "痛在前額與太陽穴，源頭卻可能在後頸。認識頸因性頭痛的辨識線索與危險徵象。"),
+    "tinnitus.html": ("耳鳴",
+                      "耳朵檢查正常卻一直響？如果咬牙、轉頭會改變聲音，那可能不是耳朵的問題。"),
+    "dizziness.html": ("頭暈與眩暈",
+                       "天旋地轉、頭昏飄飄、快要昏倒——這幾種暈的成因完全不同，先分清楚方向才會對。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
@@ -314,11 +322,15 @@ TAG_CONDITIONS = {
     "髖・腹股溝": ["piriformis-syndrome.html", "si-joint-dysfunction.html"],
     "尾椎": ["coccydynia.html", "si-joint-dysfunction.html"],
     "下背・腰": ["si-joint-dysfunction.html", "piriformis-syndrome.html"],
-    "顳顎關節": ["tmj-disorder.html"],
-    "顱頸整合": ["tmj-disorder.html"],
+    "顳顎關節": ["tmj-disorder.html", "tinnitus.html"],
+    "顱頸整合": ["tmj-disorder.html", "headache.html", "tinnitus.html"],
     "足・踝": ["plantar-fasciitis.html", "leg-length-discrepancy.html"],
-    "肩頸": ["hand-numbness.html"],
+    "肩頸": ["neck-pain.html", "headache.html", "hand-numbness.html"],
     "手肘・手腕": ["hand-numbness.html"],
+    "頭痛・偏頭痛": ["headache.html", "neck-pain.html"],
+    "耳鳴・耳悶": ["tinnitus.html", "tmj-disorder.html"],
+    "暈眩": ["dizziness.html", "neck-pain.html"],
+    "落枕": ["neck-pain.html"],
 }
 
 # 主題導言：萃取自醫師歷年文章中的治療觀念（醫師觀點，非診療建議）
