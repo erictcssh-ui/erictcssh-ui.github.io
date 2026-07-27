@@ -312,6 +312,8 @@ CONDITION_PAGES = {
                       "耳朵檢查正常卻一直響？如果咬牙、轉頭會改變聲音，那可能不是耳朵的問題。"),
     "dizziness.html": ("頭暈與眩暈",
                        "天旋地轉、頭昏飄飄、快要昏倒——這幾種暈的成因完全不同，先分清楚方向才會對。"),
+    "shoulder-pain.html": ("肩痛：夾擠與五十肩",
+                           "不是所有肩痛都是五十肩。別人幫你抬手臂抬不抬得起來，是最關鍵的分辨。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
@@ -325,8 +327,8 @@ TAG_CONDITIONS = {
     "顳顎關節": ["tmj-disorder.html", "tinnitus.html"],
     "顱頸整合": ["tmj-disorder.html", "headache.html", "tinnitus.html"],
     "足・踝": ["plantar-fasciitis.html", "leg-length-discrepancy.html"],
-    "肩頸": ["neck-pain.html", "headache.html", "hand-numbness.html"],
-    "手肘・手腕": ["hand-numbness.html"],
+    "肩頸": ["neck-pain.html", "shoulder-pain.html", "headache.html", "hand-numbness.html"],
+    "手肘・手腕": ["hand-numbness.html", "shoulder-pain.html"],
     "頭痛・偏頭痛": ["headache.html", "neck-pain.html"],
     "耳鳴・耳悶": ["tinnitus.html", "tmj-disorder.html"],
     "暈眩": ["dizziness.html", "neck-pain.html"],
