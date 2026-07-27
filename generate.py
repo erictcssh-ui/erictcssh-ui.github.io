@@ -1127,6 +1127,9 @@ def main():
         if fp.exists():
             s = fp.read_text(encoding="utf-8")
             s2 = re.sub(r"css/style\.css(\?v=[a-f0-9]+)?", f"css/style.css?v={CSS_V}", s)
+            # 疼痛指南總覽的篇數自動同步（新增主題頁時不必手動改）
+            s2 = re.sub(r"(<span data-guide-count>)\d+(</span>)",
+                        rf"\g<1>{len(CONDITION_PAGES)}\g<2>", s2)
             if s2 != s:
                 fp.write_text(s2, encoding="utf-8")
 
