@@ -949,7 +949,7 @@ def main():
     </section>
 
     <section>
-      <h2>哪裡在痛？</h2>
+      <h2>疼痛指南</h2>
       <p class="section-note">常見疼痛的成因、容易被誤認的狀況，以及什麼情況需要立刻就醫。</p>
       <div class="guide-grid">
 {"".join(f'''        <a class="guide-card" href="conditions/{g}">
@@ -957,7 +957,7 @@ def main():
           <span class="gc-desc">{d}</span>
         </a>
 ''' for g, (t, d) in CONDITION_PAGES.items())}      </div>
-      <p class="section-note"><a href="conditions/index.html">查看完整疼痛指南 →</a></p>
+      <p class="section-note"><a href="conditions/index.html">查看全部主題 →</a></p>
     </section>
 
     <section>
