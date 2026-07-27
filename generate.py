@@ -288,6 +288,19 @@ EXCLUDE_POSTS = {
     "post-2024-05-16",   # 問卷填寫呼籲（時效已過，2026-07-26 醫師指示刪）
 }
 
+# 疼痛指南主題頁（conditions/）：檔名 → (顯示標題, 一句話說明)。新增主題頁時加一行即可。
+CONDITION_PAGES = {
+    "piriformis-syndrome.html": ("梨狀肌症候群",
+                                 "久坐就痛、從椅子起身最痛的臀部深處痠麻，常被當成椎間盤壓迫的坐骨神經痛。"),
+}
+
+# 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
+TAG_CONDITIONS = {
+    "骨盆": ["piriformis-syndrome.html"],
+    "薦髂關節": ["piriformis-syndrome.html"],
+    "髖・腹股溝": ["piriformis-syndrome.html"],
+}
+
 # 主題導言：萃取自醫師歷年文章中的治療觀念（醫師觀點，非診療建議）
 TAG_INTROS = {
     "骨盆": "調骨盆，不是把骨頭「喬正」到某個絕對正確的位置——而是調「骨盆的回正能力」，把能隨日常活動變化調節的活動能力找回來。骨盆是身體的避震器與力量傳遞的中繼站，活動力喪失的原因可能在關節囊韌帶、肌肉筋膜張力或關節錯移，需要精密的檢查與診斷，而非一體適用的快速手法。以下是我在診間關於骨盆的觀察與紀錄。",
@@ -432,6 +445,7 @@ def footer_html(p):
       <a href="{p}index.html">首頁</a>
       <a href="{p}articles/index.html">文章</a>
       <a href="{p}services.html">診療項目</a>
+      <a href="{p}conditions/index.html">疼痛指南</a>
       <a href="{p}faq.html">初診須知</a>
       <a href="{p}courses.html">工作坊</a>
       <a href="{p}clinic.html">門診資訊</a>
@@ -453,7 +467,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         "index": (f"{css_prefix}index.html", "首頁"),
         "articles": (f"{css_prefix}articles/index.html", "文章"),
         "services": (f"{css_prefix}services.html", "診療項目"),
-        "faq": (f"{css_prefix}faq.html", "初診須知"),
+        "conditions": (f"{css_prefix}conditions/index.html", "疼痛指南"),
         "courses": (f"{css_prefix}courses.html", "工作坊"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
@@ -817,10 +831,19 @@ def main():
             '實際診斷與治療請以門診評估為準。</p></div>\n'
             if intro else ""
         )
+        # 對應的疼痛指南主題頁（若有）
+        guides = [g for g in TAG_CONDITIONS.get(name, []) if g in CONDITION_PAGES]
+        guide_html = ""
+        if guides:
+            links = "・".join(
+                f'<a href="../conditions/{g}">{CONDITION_PAGES[g][0]}</a>' for g in guides
+            )
+            guide_html = (f'    <p class="guide-link">📖 深入了解：{links}'
+                          f'（疼痛指南主題頁）</p>\n')
         desc = (intro[:90] + "…") if intro else f"黃彥鈞中醫師關於「{name}」的文章，共 {len(subset)} 篇。"
         (ARTICLES / f"tag-{name}.html").write_text(
             page(f"{name}（主題）",
-                 f"    <h1>主題：{name}</h1>\n" + intro_html
+                 f"    <h1>主題：{name}</h1>\n" + intro_html + guide_html
                  + listing_by_year(subset),
                  desc=desc,
                  url_path=f"articles/tag-{name}.html"),
@@ -923,6 +946,18 @@ def main():
       <h1>治病，也醫人</h1>
       <p>以徒手、針刺與方藥，實踐全人診療的臨床紀錄。</p>
       <p><a class="cta" href="clinic.html">📅 門診時間表・掛號方式</a></p>
+    </section>
+
+    <section>
+      <h2>哪裡在痛？</h2>
+      <p class="section-note">常見疼痛的成因、容易被誤認的狀況，以及什麼情況需要立刻就醫。</p>
+      <div class="guide-grid">
+{"".join(f'''        <a class="guide-card" href="conditions/{g}">
+          <span class="gc-title">{t}</span>
+          <span class="gc-desc">{d}</span>
+        </a>
+''' for g, (t, d) in CONDITION_PAGES.items())}      </div>
+      <p class="section-note"><a href="conditions/index.html">查看完整疼痛指南 →</a></p>
     </section>
 
     <section>
@@ -1031,7 +1066,8 @@ def main():
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "privacy.html"]:
+    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "privacy.html",
+              "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]:
         sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
     for e in entries:
         sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
@@ -1051,7 +1087,10 @@ def main():
     )
 
     # 靜態頁的 CSS 連結同步帶上版本號
-    for name in ["about.html", "clinic.html", "services.html", "faq.html", "courses.html", "privacy.html"]:
+    static_names = ["about.html", "clinic.html", "services.html", "faq.html",
+                    "courses.html", "privacy.html", "conditions/index.html"] \
+        + [f"conditions/{g}" for g in CONDITION_PAGES]
+    for name in static_names:
         fp = SITE / name
         if fp.exists():
             s = fp.read_text(encoding="utf-8")
