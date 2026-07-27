@@ -292,13 +292,16 @@ EXCLUDE_POSTS = {
 CONDITION_PAGES = {
     "piriformis-syndrome.html": ("梨狀肌症候群",
                                  "久坐就痛、從椅子起身最痛的臀部深處痠麻，常被當成椎間盤壓迫的坐骨神經痛。"),
+    "coccydynia.html": ("尾椎痛",
+                        "坐著就痛、站起來反而好一些。影像常看不出問題，而真正的源頭也未必在尾椎本身。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
 TAG_CONDITIONS = {
-    "骨盆": ["piriformis-syndrome.html"],
-    "薦髂關節": ["piriformis-syndrome.html"],
+    "骨盆": ["piriformis-syndrome.html", "coccydynia.html"],
+    "薦髂關節": ["piriformis-syndrome.html", "coccydynia.html"],
     "髖・腹股溝": ["piriformis-syndrome.html"],
+    "尾椎": ["coccydynia.html"],
 }
 
 # 主題導言：萃取自醫師歷年文章中的治療觀念（醫師觀點，非診療建議）
