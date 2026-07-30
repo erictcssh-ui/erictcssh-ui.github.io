@@ -551,6 +551,7 @@ def footer_html(p):
       <a href="{p}courses.html">工作坊</a>
       <a href="{p}clinic.html">門診資訊</a>
       <a href="{p}about.html">關於醫師</a>
+      <a href="{p}network.html">跨專業照護網絡</a>
       <a href="{p}feed.xml">RSS</a>
     </nav>
     <p class="footer-contact">太初中醫 02-2777-5800・東門中醫 02-2343-2000
@@ -558,7 +559,7 @@ def footer_html(p):
     <p class="footer-social">
       <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>・
       <a href="{IG_URL}" target="_blank" rel="noopener">Instagram</a></p>
-    <p>{COPYRIGHT}・<a href="{p}network.html">跨專業照護網絡</a>・<a href="{p}privacy.html">隱私權與免責聲明</a></p>
+    <p>{COPYRIGHT}・<a href="{p}privacy.html">隱私權與免責聲明</a></p>
   </footer>"""
 
 
@@ -1067,6 +1068,7 @@ def main():
       <p><a class="cta" href="clinic.html">📅 門診時間表・掛號方式</a></p>
     </section>
 
+    <div class="fold-row">
     <details class="home-fold">
       <summary>
         <span class="hf-head"><span class="hf-title">疼痛指南</span><span class="hf-count">{len(CONDITION_PAGES)} 個主題</span></span>
@@ -1095,6 +1097,7 @@ def main():
       <p class="section-note">想找特定症狀的相關文章？<a href="articles/index.html">到文章頁依症狀搜尋 →</a></p>
       </div>
     </details>
+    </div>
 
     <details class="home-fold" open>
       <summary>

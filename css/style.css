@@ -735,3 +735,11 @@ p.guide-link {
 .home-fold .fold-body { padding: .2em 1.4em 1.25em; border-top: 1px solid var(--border, #eee9dd); }
 .home-fold .fold-body > :first-child { margin-top: 1em; }
 .home-fold > summary:hover .hf-title { color: #b0533a; }
+
+/* 首頁：指南與醫案並排 */
+.fold-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; align-items: start; }
+.fold-row .home-fold { margin: 1.4em 0 0; }
+@media (max-width: 768px) {
+  .fold-row { grid-template-columns: 1fr; gap: 0; }
+  .fold-row .home-fold { margin: 1.4em 0 0; }
+}
