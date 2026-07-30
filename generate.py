@@ -288,6 +288,62 @@ EXCLUDE_POSTS = {
     "post-2024-05-16",   # 問卷填寫呼籲（時效已過，2026-07-26 醫師指示刪）
 }
 
+# 文章 → 疼痛指南 的內部連結對照（2026-07-30 建立）
+# 主連結一個、次要最多一個；渲染在文章頁「延伸閱讀」上方。新增文章時在此加一行即可。
+ARTICLE_GUIDES = {
+    "post-2023-05-23": ["headache.html"],
+    "post-2023-08-17": ["knee-pain.html"],
+    "post-2023-09-02": ["coccydynia.html"],
+    "post-2024-03-10": ["neck-pain.html", "headache.html"],
+    "post-2024-03-12": ["tmj-disorder.html", "tinnitus.html"],
+    "post-2024-03-14": ["neck-pain.html"],
+    "post-2024-03-23": ["tmj-disorder.html"],
+    "post-2024-04-14": ["tinnitus.html"],
+    "post-2024-05-24": ["dizziness.html", "neck-pain.html"],
+    "post-2024-07-09": ["tinnitus.html"],
+    "post-2024-07-27": ["si-joint-dysfunction.html"],
+    "post-2024-08-20": ["si-joint-dysfunction.html"],
+    "post-2024-09-12": ["neck-pain.html"],
+    "post-2024-09-19": ["coccydynia.html", "si-joint-dysfunction.html"],
+    "post-2024-10-15-2": ["tinnitus.html"],
+    "post-2024-12-19-2": ["coccydynia.html", "si-joint-dysfunction.html"],
+    "post-2025-02-20": ["neck-pain.html", "tinnitus.html"],
+    "post-2025-03-06": ["neck-pain.html"],
+    "post-2025-03-19": ["neck-pain.html", "hand-numbness.html"],
+    "post-2025-05-14": ["headache.html", "shoulder-pain.html"],
+    "post-2025-06-12": ["dizziness.html", "neck-pain.html"],
+    "post-2025-07-10": ["coccydynia.html"],
+    "post-2025-11-27": ["si-joint-dysfunction.html", "plantar-fasciitis.html"],
+    "post-2025-11-29": ["manual-therapy.html", "si-joint-dysfunction.html"],
+    "post-2025-12-10": ["neck-pain.html", "leg-length-discrepancy.html"],
+    "post-2025-12-11": ["tmj-disorder.html", "neck-pain.html"],
+    "post-2025-12-15": ["knee-pain.html", "si-joint-dysfunction.html"],
+    "post-2025-12-30-2": ["si-joint-dysfunction.html"],
+    "post-2026-01-07": ["si-joint-dysfunction.html", "plantar-fasciitis.html"],
+    "post-2026-01-17": ["headache.html", "dizziness.html"],
+    "post-2026-01-21": ["hand-numbness.html", "shoulder-pain.html"],
+    "post-2026-01-23": ["leg-length-discrepancy.html", "flat-foot.html"],
+    "post-2026-02-01": ["neck-pain.html"],
+    "post-2026-02-04": ["headache.html"],
+    "post-2026-02-07": ["mothers-thumb.html"],
+    "post-2026-02-09": ["si-joint-dysfunction.html"],
+    "post-2026-02-09-2": ["tmj-disorder.html", "neck-pain.html"],
+    "post-2026-02-27": ["si-joint-dysfunction.html", "knee-pain.html"],
+    "post-2026-03-05": ["manual-therapy.html", "hip-impingement.html"],
+    "post-2026-03-12": ["si-joint-dysfunction.html"],
+    "post-2026-03-14": ["piriformis-syndrome.html"],
+    "post-2026-03-23-2": ["coccydynia.html", "si-joint-dysfunction.html"],
+    "post-2026-04-04": ["neck-pain.html"],
+    "post-2026-04-09": ["coccydynia.html", "si-joint-dysfunction.html"],
+    "post-2026-04-15": ["tinnitus.html", "neck-pain.html"],
+    "post-2026-04-20": ["piriformis-syndrome.html"],
+    "post-2026-05-02": ["flat-foot.html"],
+    "post-2026-06-18": ["neck-pain.html", "tinnitus.html"],
+    "post-2026-07-08": ["piriformis-syndrome.html"],
+    "post-2026-07-22": ["hip-impingement.html"],
+    "post-2026-07-23": ["si-joint-dysfunction.html"],
+}
+
 # 疼痛指南主題頁（conditions/）：檔名 → (顯示標題, 一句話說明)。新增主題頁時加一行即可。
 CONDITION_PAGES = {
     "piriformis-syndrome.html": ("梨狀肌症候群",
@@ -797,6 +853,24 @@ def main():
             + "\n      ".join(nav_links) + "\n    </nav>"
         ) if nav_links else ""
 
+        # 指南導引：把讀完醫案的人接到對應的疼痛指南深度頁
+        guide_html = ""
+        guides = ARTICLE_GUIDES.get(e["slug"], [])
+        if guides:
+            gitems = "\n".join(
+                f'        <li><a href="../conditions/{g}">{CONDITION_PAGES[g][0]}</a>'
+                f'——{CONDITION_PAGES[g][1]}</li>'
+                for g in guides if g in CONDITION_PAGES
+            )
+            if gitems:
+                guide_html = f"""
+    <section class="related guide-xref">
+      <h2>想了解更完整的成因與就醫時機</h2>
+      <ul>
+{gitems}
+      </ul>
+    </section>"""
+
         related = related_entries(e, entries)
         related_html = ""
         if related:
@@ -835,7 +909,7 @@ def main():
       <p>有類似的困擾想諮詢？</p>
       <p><a class="cta" href="../clinic.html">📅 門診時間・預約掛號</a>
       <a class="cta line" href="{LINE_URL}" target="_blank" rel="noopener">💬 LINE 線上預約</a></p>
-    </div>{post_nav_html}{related_html}"""
+    </div>{guide_html}{post_nav_html}{related_html}"""
         (ARTICLES / f"{e['slug']}.html").write_text(
             page(e["title"], body, desc=e["excerpt"],
                  url_path=f"articles/{e['slug']}.html", og_image=first_image,

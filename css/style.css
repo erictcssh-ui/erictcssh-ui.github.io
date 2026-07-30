@@ -659,3 +659,32 @@ p.guide-link {
   font-size: 0.88rem;
   line-height: 1.9;
 }
+
+/* ===== 跨專業照護網絡（about） ===== */
+.network-intro { max-width: 42em; }
+.network-card {
+  background: var(--card, #ffffff);
+  border: 1.5px solid var(--border, #e5e1d6);
+  border-radius: 14px;
+  padding: 1.6em 1.8em;
+  margin: 1.5em 0;
+}
+.network-card h3 { margin: 0 0 .2em; color: #2f5d50; font-size: 1.25em; }
+.network-card .nc-role { color: #6b6a63; margin: 0 0 .9em; font-size: .95em; }
+.network-card .nc-meta { font-size: .92em; color: #6b6a63; margin: .8em 0 0; line-height: 1.7; }
+.nc-tags { margin: .4em 0 1em; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .5em; }
+.nc-tags li {
+  font-size: .85em; color: #2f5d50; background: #eef4f1;
+  border-radius: 999px; padding: .25em .9em;
+}
+.nc-referral {
+  border-left: 4px solid #b0533a; background: #faf8f3;
+  padding: .9em 1.1em; margin: .9em 0; line-height: 1.8; border-radius: 0 8px 8px 0;
+}
+.nc-referral .nc-label { display: block; font-size: .82em; letter-spacing: .15em; color: #b0533a; margin-bottom: .35em; font-weight: 600; }
+.nc-links a {
+  margin-right: 1.2em; color: #2f5d50; font-weight: 600;
+  text-decoration-color: rgba(47,93,80,.4); text-underline-offset: 3px;
+}
+.nc-links a:hover { color: #b0533a; text-decoration-color: rgba(176,83,58,.5); }
+.network-note { font-size: .88em; color: #6b6a63; border-top: 1.5px solid #e5e1d6; padding-top: 1em; margin-top: 1.6em; line-height: 1.7; }
