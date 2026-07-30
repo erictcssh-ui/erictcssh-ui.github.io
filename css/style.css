@@ -701,3 +701,37 @@ p.guide-link {
 .guide-xref ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
 .guide-xref li { margin-bottom: 0.45rem; line-height: 1.75; }
 .guide-xref li a { font-weight: 700; }
+
+/* ===== 首頁收合區塊 ===== */
+.home-fold {
+  border: 1.5px solid var(--border, #e5e1d6);
+  border-radius: 14px;
+  background: var(--card, #ffffff);
+  margin: 1.4em 0;
+}
+.home-fold > summary {
+  cursor: pointer;
+  padding: 1.15em 1.4em;
+  list-style: none;
+  position: relative;
+}
+.home-fold > summary::-webkit-details-marker { display: none; }
+.home-fold > summary::after {
+  content: "▾";
+  position: absolute;
+  right: 1.3em;
+  top: 1.15em;
+  color: #b0533a;
+  font-size: 1.1em;
+  transition: transform .2s ease;
+}
+.home-fold[open] > summary::after { transform: rotate(180deg); }
+.home-fold .hf-head { display: flex; align-items: baseline; gap: .7em; flex-wrap: wrap; padding-right: 1.6em; }
+.home-fold .hf-title {
+  font-size: 1.3em; font-weight: 700; color: #2f5d50; letter-spacing: .05em;
+}
+.home-fold .hf-count { color: #6b6a63; font-size: .88em; }
+.home-fold .hf-note { display: block; margin-top: .35em; color: #6b6a63; font-size: .92em; line-height: 1.6; padding-right: 1.6em; }
+.home-fold .fold-body { padding: .2em 1.4em 1.25em; border-top: 1px solid var(--border, #eee9dd); }
+.home-fold .fold-body > :first-child { margin-top: 1em; }
+.home-fold > summary:hover .hf-title { color: #b0533a; }

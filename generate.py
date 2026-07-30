@@ -1067,9 +1067,12 @@ def main():
       <p><a class="cta" href="clinic.html">📅 門診時間表・掛號方式</a></p>
     </section>
 
-    <section>
-      <h2>疼痛指南</h2>
-      <p class="section-note">常見疼痛的成因、容易被誤認的狀況，以及什麼情況需要立刻就醫。</p>
+    <details class="home-fold">
+      <summary>
+        <span class="hf-head"><span class="hf-title">疼痛指南</span><span class="hf-count">{len(CONDITION_PAGES)} 個主題</span></span>
+        <span class="hf-note">常見疼痛的成因、容易被誤認的狀況，以及什麼情況需要立刻就醫。</span>
+      </summary>
+      <div class="fold-body">
       <div class="guide-grid">
 {"".join(f'''        <a class="guide-card" href="conditions/{g}">
           <span class="gc-title">{t}</span>
@@ -1077,24 +1080,33 @@ def main():
         </a>
 ''' for g, (t, d) in CONDITION_PAGES.items())}      </div>
       <p class="section-note"><a href="conditions/index.html">查看全部主題 →</a></p>
-    </section>
+      </div>
+    </details>
 
-    <section>
-      <h2>精選醫案</h2>
-      <p class="section-note">從歷年診間紀錄中選出的代表性案例，帶您認識我的診療思路。</p>
+    <details class="home-fold">
+      <summary>
+        <span class="hf-head"><span class="hf-title">精選醫案</span><span class="hf-count">{len(featured)} 篇</span></span>
+        <span class="hf-note">從歷年診間紀錄中選出的代表性案例，帶您認識我的診療思路。</span>
+      </summary>
+      <div class="fold-body">
       <ul class="article-list">
 {featured_items}
       </ul>
       <p class="section-note">想找特定症狀的相關文章？<a href="articles/index.html">到文章頁依症狀搜尋 →</a></p>
-    </section>
+      </div>
+    </details>
 
-    <section>
-      <h2>最新文章</h2>
+    <details class="home-fold" open>
+      <summary>
+        <span class="hf-head"><span class="hf-title">最新文章</span><span class="hf-count">共 {len(entries)} 篇</span></span>
+      </summary>
+      <div class="fold-body">
       <ul class="article-list">
 {home_items}
       </ul>
       <p><a href="articles/index.html">查看全部 {len(entries)} 篇文章 →</a></p>
-    </section>
+      </div>
+    </details>
 
     <script type="application/ld+json">
     {{
