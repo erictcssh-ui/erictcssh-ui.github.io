@@ -663,31 +663,32 @@ p.guide-link {
 /* ===== 跨專業照護網絡（about） ===== */
 .network-intro { max-width: 42em; }
 .network-card {
-  background: var(--card, #ffffff);
-  border: 1.5px solid var(--border, #e5e1d6);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
   border-radius: 14px;
   padding: 1.6em 1.8em;
   margin: 1.5em 0;
 }
-.network-card h3 { margin: 0 0 .2em; color: #2f5d50; font-size: 1.25em; }
-.network-card .nc-role { color: #6b6a63; margin: 0 0 .9em; font-size: .95em; }
-.network-card .nc-meta { font-size: .92em; color: #6b6a63; margin: .8em 0 0; line-height: 1.7; }
+.network-card h3 { margin: 0 0 .2em; color: var(--accent); font-size: 1.25em; }
+.network-card .nc-role { color: var(--ink-soft); margin: 0 0 .9em; font-size: .95em; }
+.network-card .nc-meta { font-size: .92em; color: var(--ink-soft); margin: .8em 0 0; line-height: 1.7; }
 .nc-tags { margin: .4em 0 1em; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .5em; }
 .nc-tags li {
-  font-size: .85em; color: #2f5d50; background: #eef4f1;
+  font-size: .85em; color: var(--accent); background: rgba(127,150,140,.14); background: color-mix(in srgb, var(--accent) 14%, transparent);
   border-radius: 999px; padding: .25em .9em;
 }
 .nc-referral {
-  border-left: 4px solid #b0533a; background: #faf8f3;
+  color: var(--ink);
+  border-left: 4px solid var(--accent-warm); background: var(--bg);
   padding: .9em 1.1em; margin: .9em 0; line-height: 1.8; border-radius: 0 8px 8px 0;
 }
-.nc-referral .nc-label { display: block; font-size: .82em; letter-spacing: .15em; color: #b0533a; margin-bottom: .35em; font-weight: 600; }
+.nc-referral .nc-label { display: block; font-size: .82em; letter-spacing: .15em; color: var(--accent-warm); margin-bottom: .35em; font-weight: 600; }
 .nc-links a {
-  margin-right: 1.2em; color: #2f5d50; font-weight: 600;
-  text-decoration-color: rgba(47,93,80,.4); text-underline-offset: 3px;
+  margin-right: 1.2em; color: var(--accent); font-weight: 600;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px;
 }
-.nc-links a:hover { color: #b0533a; text-decoration-color: rgba(176,83,58,.5); }
-.network-note { font-size: .88em; color: #6b6a63; border-top: 1.5px solid #e5e1d6; padding-top: 1em; margin-top: 1.6em; line-height: 1.7; }
+.nc-links a:hover { color: var(--accent-warm); text-decoration-color: color-mix(in srgb, var(--accent-warm) 50%, transparent); }
+.network-note { font-size: .88em; color: var(--ink-soft); border-top: 1.5px solid #e5e1d6; padding-top: 1em; margin-top: 1.6em; line-height: 1.7; }
 
 /* 文章頁 → 疼痛指南 的導引區塊 */
 .guide-xref {
@@ -704,9 +705,9 @@ p.guide-link {
 
 /* ===== 首頁收合區塊 ===== */
 .home-fold {
-  border: 1.5px solid var(--border, #e5e1d6);
+  border: 1.5px solid var(--border);
   border-radius: 14px;
-  background: var(--card, #ffffff);
+  background: var(--surface);
   margin: 1.4em 0;
 }
 .home-fold > summary {
@@ -721,20 +722,20 @@ p.guide-link {
   position: absolute;
   right: 1.3em;
   top: 1.15em;
-  color: #b0533a;
+  color: var(--accent-warm);
   font-size: 1.1em;
   transition: transform .2s ease;
 }
 .home-fold[open] > summary::after { transform: rotate(180deg); }
 .home-fold .hf-head { display: flex; align-items: baseline; gap: .7em; flex-wrap: wrap; padding-right: 1.6em; }
 .home-fold .hf-title {
-  font-size: 1.3em; font-weight: 700; color: #2f5d50; letter-spacing: .05em;
+  font-size: 1.3em; font-weight: 700; color: var(--accent); letter-spacing: .05em;
 }
-.home-fold .hf-count { color: #6b6a63; font-size: .88em; }
-.home-fold .hf-note { display: block; margin-top: .35em; color: #6b6a63; font-size: .92em; line-height: 1.6; padding-right: 1.6em; }
-.home-fold .fold-body { padding: .2em 1.4em 1.25em; border-top: 1px solid var(--border, #eee9dd); }
+.home-fold .hf-count { color: var(--ink-soft); font-size: .88em; }
+.home-fold .hf-note { display: block; margin-top: .35em; color: var(--ink-soft); font-size: .92em; line-height: 1.6; padding-right: 1.6em; }
+.home-fold .fold-body { padding: .2em 1.4em 1.25em; border-top: 1px solid var(--border); }
 .home-fold .fold-body > :first-child { margin-top: 1em; }
-.home-fold > summary:hover .hf-title { color: #b0533a; }
+.home-fold > summary:hover .hf-title { color: var(--accent-warm); }
 
 /* 首頁：指南與醫案並排 */
 .fold-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; align-items: start; }
