@@ -688,3 +688,16 @@ p.guide-link {
 }
 .nc-links a:hover { color: #b0533a; text-decoration-color: rgba(176,83,58,.5); }
 .network-note { font-size: .88em; color: #6b6a63; border-top: 1.5px solid #e5e1d6; padding-top: 1em; margin-top: 1.6em; line-height: 1.7; }
+
+/* 文章頁 → 疼痛指南 的導引區塊 */
+.guide-xref {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.1rem;
+}
+.guide-xref h2 {
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+}
+.guide-xref ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.guide-xref li { margin-bottom: 0.45rem; line-height: 1.75; }
+.guide-xref li a { font-weight: 700; }

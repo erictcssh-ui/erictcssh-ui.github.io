@@ -558,7 +558,7 @@ def footer_html(p):
     <p class="footer-social">
       <a href="{FB_URL}" target="_blank" rel="noopener">Facebook</a>・
       <a href="{IG_URL}" target="_blank" rel="noopener">Instagram</a></p>
-    <p>{COPYRIGHT}・<a href="{p}privacy.html">隱私權與免責聲明</a></p>
+    <p>{COPYRIGHT}・<a href="{p}network.html">跨專業照護網絡</a>・<a href="{p}privacy.html">隱私權與免責聲明</a></p>
   </footer>"""
 
 
@@ -1185,7 +1185,7 @@ def main():
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "privacy.html",
+    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "network.html", "privacy.html",
               "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]:
         sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
     for e in entries:
@@ -1207,7 +1207,7 @@ def main():
 
     # 靜態頁的 CSS 連結同步帶上版本號
     static_names = ["about.html", "clinic.html", "services.html", "faq.html",
-                    "courses.html", "privacy.html", "conditions/index.html"] \
+                    "courses.html", "privacy.html", "network.html", "conditions/index.html"] \
         + [f"conditions/{g}" for g in CONDITION_PAGES]
     for name in static_names:
         fp = SITE / name
@@ -1222,7 +1222,7 @@ def main():
 
     # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
     from urllib.parse import unquote
-    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html"]:
+    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html", "network.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
