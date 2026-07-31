@@ -572,6 +572,13 @@ blockquote .src {
   margin: 0.3rem 0 0;
 }
 
+/* 寬表格：窄螢幕在容器內橫向捲動，避免頁面本身橫捲或欄位擠成單字換行 */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table-wrap .atlas-table { margin: 1.2rem 0; }
+
 /* 對照圖：窄螢幕保留可讀字級，圖內橫向捲動（頁面本身不橫捲） */
 @media (max-width: 640px) {
   .atlas-fig {
