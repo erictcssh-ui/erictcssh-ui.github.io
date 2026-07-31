@@ -573,6 +573,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         "courses": (f"{css_prefix}courses.html", "工作坊"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
+        "network": (f"{css_prefix}network.html", "照護網絡"),
     }
     cur_attr = ' aria-current="page"'
     nav_html = "\n      ".join(

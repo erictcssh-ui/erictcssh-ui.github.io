@@ -744,3 +744,9 @@ p.guide-link {
   .fold-row { grid-template-columns: 1fr; gap: 0; }
   .fold-row .home-fold { margin: 1.4em 0 0; }
 }
+
+/* 導覽 8 項後的手機微調：縮小間距與字距，讓 375 寬排回兩行 */
+@media (max-width: 480px) {
+  nav.site-nav { gap: 0.4rem 1rem; }
+  nav.site-nav a { letter-spacing: 0.08em; font-size: 0.92rem; }
+}
