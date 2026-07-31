@@ -750,3 +750,8 @@ p.guide-link {
   nav.site-nav { gap: 0.4rem 1rem; }
   nav.site-nav a { letter-spacing: 0.08em; font-size: 0.92rem; }
 }
+
+/* 照護網絡：一卡多醫師子區塊 */
+.nc-person { border-top: 1px solid var(--border); padding-top: 1.1em; margin-top: 1.2em; }
+.nc-person h4 { margin: 0 0 .6em; font-size: 1.08em; color: var(--ink); }
+.nc-person-role { font-size: .82em; color: var(--ink-soft); font-weight: 400; margin-left: .6em; }
