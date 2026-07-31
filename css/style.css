@@ -9,6 +9,17 @@
   --accent-warm: #b0533a;   /* 硃砂 */
   --border: #e5e1d6;
   --max-width: 46rem;
+
+  /* 插圖（自繪 SVG）色階：主色沿用上方變數，這裡只補插圖需要的中間色。
+     深色模式一律改為亮色版，避免圖說文字在深色底下過暗。 */
+  --fig-line-2: #4a7a6a;     /* 次要綠線條 */
+  --fig-accent: #7fb8a4;     /* 淺綠：筋膜、關節唇等強調結構 */
+  --fig-warm-deep: #a04528;  /* 深硃砂：圖內小標 */
+  --fig-warm-mid: #c9705a;   /* 疼痛區塊填色（中） */
+  --fig-warm-soft: #d99a80;  /* 疼痛區塊填色（淺） */
+  --fig-warm-dark: #a8452c;  /* 疼痛區塊填色（深） */
+  --fig-cool: #5b7a9d;       /* 藍：對照標記 */
+  --fig-faint: #a3a094;      /* 刻意畫淡：虛線代表「沒在工作」的結構 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,6 +31,15 @@
     --accent: #7fb8a4;
     --accent-warm: #d98a71;
     --border: #3a3933;
+
+    --fig-line-2: #93c6b3;
+    --fig-accent: #b0dcc9;
+    --fig-warm-deep: #e8a189;
+    --fig-warm-mid: #d98a71;
+    --fig-warm-soft: #e0a68f;
+    --fig-warm-dark: #cf7f66;
+    --fig-cool: #93b3d4;
+    --fig-faint: #6f6c64;
   }
 }
 

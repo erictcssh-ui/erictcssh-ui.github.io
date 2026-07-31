@@ -1227,7 +1227,8 @@ def main():
 
     # 靜態頁的 CSS 連結同步帶上版本號
     static_names = ["about.html", "clinic.html", "services.html", "faq.html",
-                    "courses.html", "privacy.html", "network.html", "conditions/index.html"] \
+                    "courses.html", "privacy.html", "network.html", "conditions/index.html",
+                    "atlas/gluteus-medius.html"] \
         + [f"conditions/{g}" for g in CONDITION_PAGES]
     for name in static_names:
         fp = SITE / name

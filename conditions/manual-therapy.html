@@ -25,7 +25,7 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <meta name="theme-color" content="#2f5d50">
   <link rel="stylesheet" href="../css/fonts.css">
-  <link rel="stylesheet" href="../css/style.css?v=7320cee4">
+  <link rel="stylesheet" href="../css/style.css?v=e62a27da">
 </head>
 <body>
   <header class="site-header">
@@ -61,65 +61,65 @@
         <g font-family="'Noto Serif TC','PingFang TC',serif">
 
         <!-- ══ 左：迴圈 ══ -->
-        <text x="52" y="42" font-size="20" font-weight="700" fill="#b0533a">走不出去的迴圈</text>
+        <text x="52" y="42" font-size="20" font-weight="700" fill="var(--accent-warm)">走不出去的迴圈</text>
 
         <g transform="translate(250,270)">
-          <circle cx="0" cy="0" r="112" fill="none" stroke="#b0533a" stroke-width="3" stroke-dasharray="10 8" opacity="0.55"/>
+          <circle cx="0" cy="0" r="112" fill="none" stroke="var(--accent-warm)" stroke-width="3" stroke-dasharray="10 8" opacity="0.55"/>
           <!-- 節點 -->
-          <g fill="#faf8f3" stroke="#b0533a" stroke-width="2.6">
+          <g fill="var(--bg)" stroke="var(--accent-warm)" stroke-width="2.6">
             <circle cx="0" cy="-112" r="11"/><circle cx="112" cy="0" r="11"/>
             <circle cx="0" cy="112" r="11"/><circle cx="-112" cy="0" r="11"/>
           </g>
           <!-- 方向箭頭（順時針：痛了→跑掉了→去喬→暫時鬆了） -->
-          <g fill="#b0533a">
+          <g fill="var(--accent-warm)">
             <g transform="translate(79,-79) rotate(45)"><polygon points="0,-9 14,0 0,9"/></g>
             <g transform="translate(79,79) rotate(135)"><polygon points="0,-9 14,0 0,9"/></g>
             <g transform="translate(-79,79) rotate(225)"><polygon points="0,-9 14,0 0,9"/></g>
             <g transform="translate(-79,-79) rotate(315)"><polygon points="0,-9 14,0 0,9"/></g>
           </g>
-          <g font-size="17" fill="#2b2b28">
+          <g font-size="17" fill="var(--ink)">
             <text x="0" y="-130" text-anchor="middle">痛了</text>
-            <text x="130" y="6" font-weight="700" fill="#b0533a">「一定是跑掉了」</text>
+            <text x="130" y="6" font-weight="700" fill="var(--accent-warm)">「一定是跑掉了」</text>
             <text x="0" y="146" text-anchor="middle">去「喬」</text>
             <text x="-130" y="6" text-anchor="end">暫時鬆了</text>
           </g>
         </g>
-        <text x="250" y="452" font-size="16" fill="#6b6a63" text-anchor="middle">痛→喬→好→再痛，問題本身沒有改變</text>
+        <text x="250" y="452" font-size="16" fill="var(--ink-soft)" text-anchor="middle">痛→喬→好→再痛，問題本身沒有改變</text>
 
-        <line x1="500" y1="34" x2="500" y2="466" stroke="#e5e1d6" stroke-width="2"/>
+        <line x1="500" y1="34" x2="500" y2="466" stroke="var(--border)" stroke-width="2"/>
 
         <!-- ══ 右：路徑 ══ -->
-        <text x="556" y="42" font-size="20" font-weight="700" fill="#2f5d50">走得出去的路徑</text>
+        <text x="556" y="42" font-size="20" font-weight="700" fill="var(--accent)">走得出去的路徑</text>
 
         <g transform="translate(560,90)">
           <g font-size="16">
-            <rect x="0" y="0" width="380" height="52" rx="10" fill="#ffffff" stroke="#e5e1d6" stroke-width="2"/>
-            <text x="190" y="32" text-anchor="middle" fill="#2b2b28">疼痛出現</text>
+            <rect x="0" y="0" width="380" height="52" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="2"/>
+            <text x="190" y="32" text-anchor="middle" fill="var(--ink)">疼痛出現</text>
 
-            <rect x="0" y="82" width="380" height="52" rx="10" fill="#ffffff" stroke="#e5e1d6" stroke-width="2"/>
-            <text x="190" y="114" text-anchor="middle" fill="#2b2b28">評估：找出真正失能的環節</text>
+            <rect x="0" y="82" width="380" height="52" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="2"/>
+            <text x="190" y="114" text-anchor="middle" fill="var(--ink)">評估：找出真正失能的環節</text>
 
-            <rect x="0" y="164" width="380" height="60" rx="10" fill="#2f5d50" opacity="0.12"/>
-            <rect x="0" y="164" width="380" height="60" rx="10" fill="none" stroke="#2f5d50" stroke-width="2.4"/>
-            <text x="190" y="190" text-anchor="middle" fill="#2f5d50" font-weight="700">徒手處理</text>
-            <text x="190" y="212" text-anchor="middle" fill="#6b6a63" font-size="15">解除障礙、降低敏感度</text>
+            <rect x="0" y="164" width="380" height="60" rx="10" fill="var(--accent)" opacity="0.12"/>
+            <rect x="0" y="164" width="380" height="60" rx="10" fill="none" stroke="var(--accent)" stroke-width="2.4"/>
+            <text x="190" y="190" text-anchor="middle" fill="var(--accent)" font-weight="700">徒手處理</text>
+            <text x="190" y="212" text-anchor="middle" fill="var(--ink-soft)" font-size="15">解除障礙、降低敏感度</text>
 
-            <rect x="0" y="254" width="380" height="60" rx="10" fill="#4a7a6a" opacity="0.12"/>
-            <rect x="0" y="254" width="380" height="60" rx="10" fill="none" stroke="#4a7a6a" stroke-width="2.4"/>
-            <text x="190" y="280" text-anchor="middle" fill="#4a7a6a" font-weight="700">訓練與調整</text>
-            <text x="190" y="302" text-anchor="middle" fill="#6b6a63" font-size="15">讓改變留得住</text>
+            <rect x="0" y="254" width="380" height="60" rx="10" fill="var(--fig-line-2)" opacity="0.12"/>
+            <rect x="0" y="254" width="380" height="60" rx="10" fill="none" stroke="var(--fig-line-2)" stroke-width="2.4"/>
+            <text x="190" y="280" text-anchor="middle" fill="var(--fig-line-2)" font-weight="700">訓練與調整</text>
+            <text x="190" y="302" text-anchor="middle" fill="var(--ink-soft)" font-size="15">讓改變留得住</text>
 
-            <rect x="60" y="344" width="260" height="48" rx="24" fill="#2f5d50"/>
-            <text x="190" y="374" text-anchor="middle" fill="#ffffff" font-weight="700">持久的改善</text>
+            <rect x="60" y="344" width="260" height="48" rx="24" fill="var(--accent)"/>
+            <text x="190" y="374" text-anchor="middle" fill="var(--surface)" font-weight="700">持久的改善</text>
           </g>
           <!-- 箭頭 -->
-          <g stroke="#6b6a63" stroke-width="2.4" opacity="0.7">
+          <g stroke="var(--ink-soft)" stroke-width="2.4" opacity="0.7">
             <line x1="190" y1="52" x2="190" y2="76"/>
             <line x1="190" y1="134" x2="190" y2="158"/>
             <line x1="190" y1="224" x2="190" y2="248"/>
             <line x1="190" y1="314" x2="190" y2="338"/>
           </g>
-          <g fill="#6b6a63" opacity="0.8">
+          <g fill="var(--ink-soft)" opacity="0.8">
             <polygon points="190,80 184,68 196,68"/><polygon points="190,162 184,150 196,150"/>
             <polygon points="190,252 184,240 196,240"/><polygon points="190,342 184,330 196,330"/>
           </g>
