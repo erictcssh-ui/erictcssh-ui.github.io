@@ -303,7 +303,7 @@ ARTICLE_GUIDES = {
     "post-2024-07-09": ["tinnitus.html"],
     "post-2024-07-27": ["si-joint-dysfunction.html"],
     "post-2024-08-20": ["si-joint-dysfunction.html"],
-    "post-2024-09-12": ["neck-pain.html"],
+    "post-2024-09-12": ["neck-pain.html", "interscapular-pain.html"],
     "post-2024-09-19": ["coccydynia.html", "si-joint-dysfunction.html"],
     "post-2024-10-15-2": ["tinnitus.html"],
     "post-2024-12-19-2": ["coccydynia.html", "si-joint-dysfunction.html"],
@@ -337,6 +337,7 @@ ARTICLE_GUIDES = {
     "post-2026-04-09": ["coccydynia.html", "si-joint-dysfunction.html"],
     "post-2026-04-15": ["tinnitus.html", "neck-pain.html"],
     "post-2026-04-20": ["piriformis-syndrome.html"],
+    "post-2026-04-27": ["interscapular-pain.html"],
     "post-2026-05-02": ["flat-foot.html"],
     "post-2026-06-18": ["neck-pain.html", "tinnitus.html"],
     "post-2026-07-08": ["piriformis-syndrome.html"],
@@ -380,6 +381,8 @@ CONDITION_PAGES = {
                        "上下樓梯痛、久坐起身卡卡。膝蓋夾在髖與踝之間，源頭常在骨盆帶或足弓。"),
     "manual-therapy.html": ("骨頭真的會「跑掉」嗎？",
                             "痛了就是跑掉、喬回去就會好？影像研究顯示徒手治療有效，但機制不是把關節推回原位。"),
+    "interscapular-pain.html": ("膏肓痛",
+                                "肩胛骨中間那條深層痠痛，按了鬆一下、隔天照樣回來。這一區的肌肉多半不是太緊，而是被拉長。"),
 }
 
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
@@ -394,12 +397,13 @@ TAG_CONDITIONS = {
     "顳顎關節": ["tmj-disorder.html", "tinnitus.html"],
     "顱頸整合": ["tmj-disorder.html", "headache.html", "tinnitus.html"],
     "足・踝": ["plantar-fasciitis.html", "leg-length-discrepancy.html"],
-    "肩頸": ["neck-pain.html", "shoulder-pain.html", "headache.html", "hand-numbness.html"],
+    "肩頸": ["neck-pain.html", "interscapular-pain.html", "shoulder-pain.html",
+             "headache.html", "hand-numbness.html"],
     "手肘・手腕": ["hand-numbness.html", "shoulder-pain.html"],
     "頭痛・偏頭痛": ["headache.html", "neck-pain.html"],
     "耳鳴・耳悶": ["tinnitus.html", "tmj-disorder.html"],
     "暈眩": ["dizziness.html", "neck-pain.html"],
-    "落枕": ["neck-pain.html"],
+    "落枕": ["neck-pain.html", "interscapular-pain.html"],
 }
 
 # 主題導言：萃取自醫師歷年文章中的治療觀念（醫師觀點，非診療建議）
