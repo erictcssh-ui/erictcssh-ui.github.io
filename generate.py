@@ -17,6 +17,8 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 SITE = Path(__file__).parent
+# 靜態頁／指南頁的 lastmod 快取（內容雜湊 → 日期），供 sitemap 使用
+LASTMOD_CACHE = SITE / ".lastmod.json"
 EXPORT = SITE.parent / "fb-export"
 POSTS_JSON = EXPORT / "this_profile's_activity_across_facebook/posts/profile_posts_1.json"
 MEDIA_OUT = SITE / "images/posts"
@@ -1203,11 +1205,48 @@ def main():
     def url_tag(loc, lastmod):
         return f"  <url><loc>{html.escape(loc)}</loc><lastmod>{lastmod}</lastmod></url>"
 
+    # ⚠️ 靜態頁與疼痛指南的 lastmod 不可用「最新文章日期」——那會讓 7/31 才改過的
+    #    指南對外宣告成 7/26，Google 因此沒有理由回來重爬（2026-08-05 查出的真因）。
+    #    改為比對 <main> 內容雜湊：內容真的變了才更新日期，否則沿用上次的日期。
+    #    只雜湊 <main> 是為了讓 CSS 版本號、導覽列等全站性改動不會誤觸發。
+    def _main_hash(fp):
+        try:
+            t = fp.read_text(encoding="utf-8")
+        except OSError:
+            return None
+        m = re.search(r"<main>(.*?)</main>", t, re.S)
+        return hashlib.sha1((m.group(1) if m else t).encode("utf-8")).hexdigest()[:16]
+
+    def _lastmods(rels, today):
+        cache = {}
+        if LASTMOD_CACHE.exists():
+            try:
+                cache = json.loads(LASTMOD_CACHE.read_text(encoding="utf-8"))
+            except (ValueError, OSError):
+                cache = {}
+        out = {}
+        for rel in rels:
+            h = _main_hash(SITE / (rel or "index.html"))
+            prev = cache.get(rel)
+            if h and prev and prev.get("hash") == h:
+                out[rel] = prev["date"]
+            else:
+                out[rel] = today
+            if h:
+                cache[rel] = {"hash": h, "date": out[rel]}
+        LASTMOD_CACHE.write_text(
+            json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+        return out
+
+    static_rels = ["", "articles/index.html", "services.html", "faq.html", "courses.html",
+                   "clinic.html", "about.html", "network.html", "privacy.html",
+                   "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]
+    lm = _lastmods(static_rels, datetime.date.today().isoformat())
+
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for p in ["", "articles/index.html", "services.html", "faq.html", "courses.html", "clinic.html", "about.html", "network.html", "privacy.html",
-              "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]:
-        sitemap.append(url_tag(f"{SITE_URL}/{p}", latest_date))
+    for p in static_rels:
+        sitemap.append(url_tag(f"{SITE_URL}/{p}", lm[p]))
     for e in entries:
         sitemap.append(url_tag(f"{SITE_URL}/articles/{e['slug']}.html", e["date"]))
     for n in cat_names:
