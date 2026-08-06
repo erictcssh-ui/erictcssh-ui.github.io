@@ -555,7 +555,7 @@ def footer_html(p):
       <a href="{p}services.html">診療項目</a>
       <a href="{p}conditions/index.html">疼痛指南</a>
       <a href="{p}faq.html">初診須知</a>
-      <a href="{p}courses.html">工作坊</a>
+      <a href="{p}courses.html">教學與工作坊</a>
       <a href="{p}clinic.html">門診資訊</a>
       <a href="{p}about.html">關於醫師</a>
       <a href="{p}network.html">跨專業醫療照護網絡</a>
@@ -577,7 +577,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         "articles": (f"{css_prefix}articles/index.html", "文章"),
         "services": (f"{css_prefix}services.html", "診療項目"),
         "conditions": (f"{css_prefix}conditions/index.html", "疼痛指南"),
-        "courses": (f"{css_prefix}courses.html", "工作坊"),
+        "courses": (f"{css_prefix}courses.html", "教學與工作坊"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
         "network": (f"{css_prefix}network.html", "醫療照護網"),

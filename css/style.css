@@ -778,6 +778,12 @@ p.guide-link {
   nav.site-nav a { letter-spacing: 0.08em; font-size: 0.92rem; }
 }
 
+/* 「教學與工作坊」改為六字標籤後，最窄的螢幕再收一階，避免擠成三行 */
+@media (max-width: 400px) {
+  nav.site-nav { gap: 0.35rem 0.7rem; }
+  nav.site-nav a { letter-spacing: 0.02em; font-size: 0.88rem; }
+}
+
 /* 照護網絡：一卡多醫師子區塊 */
 .nc-person { border-top: 1px solid var(--border); padding-top: 1.1em; margin-top: 1.2em; }
 .nc-person h4 { margin: 0 0 .6em; font-size: 1.08em; color: var(--ink); }
