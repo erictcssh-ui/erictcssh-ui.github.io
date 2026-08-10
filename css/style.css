@@ -699,6 +699,15 @@ p.guide-link {
 .network-card h3 { margin: 0 0 .2em; color: var(--accent); font-size: 1.25em; }
 .network-card .nc-role { color: var(--ink-soft); margin: 0 0 .9em; font-size: .95em; }
 .network-card .nc-meta { font-size: .92em; color: var(--ink-soft); margin: .8em 0 0; line-height: 1.7; }
+.network-card .nc-card-img {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: .2em 0 1em;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
 .nc-tags { margin: .4em 0 1em; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .5em; }
 .nc-tags li {
   font-size: .85em; color: var(--accent); background: rgba(127,150,140,.14); background: color-mix(in srgb, var(--accent) 14%, transparent);
