@@ -1209,15 +1209,21 @@ def main():
 
     # ⚠️ 靜態頁與疼痛指南的 lastmod 不可用「最新文章日期」——那會讓 7/31 才改過的
     #    指南對外宣告成 7/26，Google 因此沒有理由回來重爬（2026-08-05 查出的真因）。
-    #    改為比對 <main> 內容雜湊：內容真的變了才更新日期，否則沿用上次的日期。
-    #    只雜湊 <main> 是為了讓 CSS 版本號、導覽列等全站性改動不會誤觸發。
+    #    改為比對內容雜湊：內容真的變了才更新日期，否則沿用上次的日期。
+    #    雜湊範圍＝<title>＋meta description＋<main>（2026-08-10 擴充：SEO 補強只改
+    #    head 的 title/description，原本只雜湊 <main> 會讓 lastmod 不動、Google 不重爬）。
+    #    不雜湊整個 head 是為了讓 CSS 版本號、導覽列等全站性改動不會誤觸發。
     def _main_hash(fp):
         try:
             t = fp.read_text(encoding="utf-8")
         except OSError:
             return None
         m = re.search(r"<main>(.*?)</main>", t, re.S)
-        return hashlib.sha1((m.group(1) if m else t).encode("utf-8")).hexdigest()[:16]
+        ti = re.search(r"<title>(.*?)</title>", t, re.S)
+        d = re.search(r'<meta name="description" content="([^"]*)"', t)
+        key = "\n".join([ti.group(1) if ti else "", d.group(1) if d else "",
+                         m.group(1) if m else t])
+        return hashlib.sha1(key.encode("utf-8")).hexdigest()[:16]
 
     def _lastmods(rels, today):
         cache = {}
