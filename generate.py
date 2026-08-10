@@ -1248,6 +1248,7 @@ def main():
 
     static_rels = ["", "articles/index.html", "services.html", "faq.html", "courses.html",
                    "clinic.html", "about.html", "network.html", "privacy.html",
+                   "dgsa-directory.html",
                    "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]
     lm = _lastmods(static_rels, datetime.date.today().isoformat())
 
@@ -1274,8 +1275,8 @@ def main():
 
     # 靜態頁的 CSS 連結同步帶上版本號
     static_names = ["about.html", "clinic.html", "services.html", "faq.html",
-                    "courses.html", "privacy.html", "network.html", "conditions/index.html",
-                    "atlas/gluteus-medius.html"] \
+                    "courses.html", "privacy.html", "network.html", "dgsa-directory.html",
+                    "conditions/index.html", "atlas/gluteus-medius.html"] \
         + [f"conditions/{g}" for g in CONDITION_PAGES]
     for name in static_names:
         fp = SITE / name
@@ -1290,7 +1291,7 @@ def main():
 
     # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
     from urllib.parse import unquote
-    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html", "network.html"]:
+    for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html", "network.html", "dgsa-directory.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
