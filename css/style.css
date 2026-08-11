@@ -695,6 +695,24 @@ p.guide-link {
   border-radius: 14px;
   padding: 1.6em 1.8em;
   margin: 1.5em 0;
+  scroll-margin-top: 90px;
+}
+.partner-index {
+  display: flex; flex-wrap: wrap; gap: .5em .6em; align-items: center;
+  margin: .8em 0 1.2em; font-size: .92em;
+}
+.partner-index .pi-label { color: var(--ink-soft); }
+.partner-index a {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 999px; padding: .3em .95em;
+  text-decoration: none; font-weight: 600;
+}
+.partner-index a:hover {
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 10%, transparent);
+  border-color: color-mix(in srgb, var(--accent-warm) 45%, transparent);
 }
 .network-card h3 { margin: 0 0 .2em; color: var(--accent); font-size: 1.25em; }
 .network-card .nc-role { color: var(--ink-soft); margin: 0 0 .9em; font-size: .95em; }
