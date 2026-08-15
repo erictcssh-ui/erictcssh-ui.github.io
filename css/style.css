@@ -484,6 +484,12 @@ a.cta.line:hover { background: #05a648; }
 .dgsa-stars { color: var(--accent-warm); letter-spacing: 0.1em; }
 .dgsa-stars .off { color: var(--border); }
 .dgsa-medal { margin-left: 0.15em; }
+.dgsa-note {
+  flex-basis: 100%;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--accent);
+}
 
 /* 課程頁：招生卡片標題層級（p.級距選擇器蓋過 .cta-box p） */
 p.course-kicker {
