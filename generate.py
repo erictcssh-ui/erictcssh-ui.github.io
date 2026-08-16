@@ -296,6 +296,7 @@ EXCLUDE_POSTS = {
 # 文章 → 疼痛指南 的內部連結對照（2026-07-30 建立）
 # 主連結一個、次要最多一個；渲染在文章頁「延伸閱讀」上方。新增文章時在此加一行即可。
 ARTICLE_GUIDES = {
+    "post-2026-08-16": ["ear-fullness.html", "tinnitus.html"],
     "post-2023-05-23": ["headache.html"],
     "post-2023-08-17": ["knee-pain.html"],
     "post-2023-09-02": ["coccydynia.html"],
@@ -386,6 +387,8 @@ CONDITION_PAGES = {
                        "上下樓梯痛、久坐起身卡卡。膝蓋夾在髖與踝之間，源頭常在骨盆帶或足弓。"),
     "manual-therapy.html": ("骨頭真的會「跑掉」嗎？",
                             "痛了就是跑掉、喬回去就會好？影像研究顯示徒手治療有效，但機制不是把關節推回原位。"),
+    "ear-fullness.html": ("耳悶",
+                          "躺下來就通、站起來又悶，講話還有回音。檢查正常時，問題可能出在耳咽管「該關的時候關不上」。"),
     "interscapular-pain.html": ("膏肓痛",
                                 "肩胛骨中間那條深層痠痛，按了鬆一下、隔天照樣回來。這一區的肌肉多半不是太緊，而是被拉長。"),
 }
@@ -406,7 +409,7 @@ TAG_CONDITIONS = {
              "headache.html", "hand-numbness.html"],
     "手肘・手腕": ["hand-numbness.html", "shoulder-pain.html"],
     "頭痛・偏頭痛": ["headache.html", "neck-pain.html"],
-    "耳鳴・耳悶": ["tinnitus.html", "tmj-disorder.html"],
+    "耳鳴・耳悶": ["tinnitus.html", "ear-fullness.html", "tmj-disorder.html"],
     "暈眩": ["dizziness.html", "neck-pain.html"],
     "落枕": ["neck-pain.html", "interscapular-pain.html"],
 }
