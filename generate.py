@@ -1139,6 +1139,18 @@ def main():
           <span class="gc-title">臀大肌 Gluteus Maximus</span>
           <span class="gc-desc">全身最大的肌肉，七成力氣用來「穩」而不是「動」。痛不離臀：薦骨、臀溝、尾骨——正是膀胱經「貫臀」的地盤。</span>
         </a>
+        <a class="guide-card" href="atlas/masseter.html">
+          <span class="gc-title">咬肌 Masseter</span>
+          <span class="gc-desc">它把痛送進牙齒、太陽穴，還能在耳朵深處製造低沉的轟鳴。對照頰車——古名「機關」，顳顎關節的古典命名。</span>
+        </a>
+        <a class="guide-card" href="atlas/quadratus-lumborum.html">
+          <span class="gc-title">腰方肌 Quadratus Lumborum</span>
+          <span class="gc-desc">下背痛的「鬼牌」——痛在薦髂、臀部與大轉子，源頭卻藏在腰側深處。對照腰眼——那個凹陷，被用 X 光驗證過。</span>
+        </a>
+        <a class="guide-card" href="atlas/iliopsoas.html">
+          <span class="gc-title">髂腰肌 Iliopsoas</span>
+          <span class="gc-desc">腹腔深處的「隱藏搗蛋鬼」，下背痛直直一條。對照衝門——用動脈搏動定位，附帶一句與今天一字不差的安全警告。</span>
+        </a>
       </div>
       <p class="section-note"><a href="atlas/index.html">進入系列 →</a></p>
       </div>
