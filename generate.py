@@ -1127,6 +1127,18 @@ def main():
           <span class="gc-title">胸鎖乳突肌 Sternocleidomastoid</span>
           <span class="gc-desc">它自己很少喊痛，卻把症狀送到頭、臉、眼窩與耳朵——還會讓人頭暈。對照人迎、水突與天窗，三條陽經並排走一條肌肉。</span>
         </a>
+        <a class="guide-card" href="atlas/suboccipitals.html">
+          <span class="gc-title">枕下肌群 Suboccipitals</span>
+          <span class="gc-desc">顱底最深處的四對小肌肉，頭痛像從眼睛後面來。對照風池與天柱——「目似脫，項如拔」六個字，古人寫了兩次。</span>
+        </a>
+        <a class="guide-card" href="atlas/upper-trapezius.html">
+          <span class="gc-title">上斜方肌 Upper Trapezius</span>
+          <span class="gc-desc">最常被按摩的肌肉，緊張型頭痛最主要的來源。對照肩井——「其深不測，如井然」，穴名本身就是一句安全警告。</span>
+        </a>
+        <a class="guide-card" href="atlas/gluteus-maximus.html">
+          <span class="gc-title">臀大肌 Gluteus Maximus</span>
+          <span class="gc-desc">全身最大的肌肉，七成力氣用來「穩」而不是「動」。痛不離臀：薦骨、臀溝、尾骨——正是膀胱經「貫臀」的地盤。</span>
+        </a>
       </div>
       <p class="section-note"><a href="atlas/index.html">進入系列 →</a></p>
       </div>
