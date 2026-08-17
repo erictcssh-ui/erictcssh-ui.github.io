@@ -1270,6 +1270,7 @@ def main():
                    "clinic.html", "about.html", "network.html", "privacy.html",
                    "dgsa-directory.html",
                    "atlas/index.html", "atlas/gluteus-medius.html",
+                   "atlas/sternocleidomastoid.html",
                    "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]
     lm = _lastmods(static_rels, datetime.date.today().isoformat())
 
@@ -1298,7 +1299,8 @@ def main():
     static_names = ["about.html", "clinic.html", "services.html", "faq.html",
                     "courses.html", "privacy.html", "network.html", "dgsa-directory.html",
                     "conditions/index.html",
-                    "atlas/index.html", "atlas/gluteus-medius.html"] \
+                    "atlas/index.html", "atlas/gluteus-medius.html",
+                    "atlas/sternocleidomastoid.html"] \
         + [f"conditions/{g}" for g in CONDITION_PAGES]
     for name in static_names:
         fp = SITE / name
@@ -1314,7 +1316,8 @@ def main():
     # 防呆：靜態頁連到的分類/標籤頁必須真的存在（標籤無文章時不會產生頁面）
     from urllib.parse import unquote
     for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html", "network.html", "dgsa-directory.html",
-                 "atlas/index.html", "atlas/gluteus-medius.html"]:
+                 "atlas/index.html", "atlas/gluteus-medius.html",
+                 "atlas/sternocleidomastoid.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
