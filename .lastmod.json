@@ -11,6 +11,14 @@
   "date": "2026-08-16",
   "hash": "5ff93ef1436e4910"
  },
+ "atlas/gluteus-medius.html": {
+  "date": "2026-08-17",
+  "hash": "e1e913eee2fd0ea9"
+ },
+ "atlas/index.html": {
+  "date": "2026-08-17",
+  "hash": "ae20595736b8fe2c"
+ },
  "clinic.html": {
   "date": "2026-07-31",
   "hash": "91732b974d87de08"
@@ -28,8 +36,8 @@
   "hash": "65352bb375eca50f"
  },
  "conditions/flat-foot.html": {
-  "date": "2026-08-10",
-  "hash": "124eacb20d7e1368"
+  "date": "2026-08-17",
+  "hash": "b955482d81530c55"
  },
  "conditions/hand-numbness.html": {
   "date": "2026-08-10",
@@ -40,8 +48,8 @@
   "hash": "abfc408777696909"
  },
  "conditions/hip-impingement.html": {
-  "date": "2026-07-31",
-  "hash": "4ba4237e9fa7bd5b"
+  "date": "2026-08-17",
+  "hash": "54b23ea2804d2372"
  },
  "conditions/index.html": {
   "date": "2026-08-16",
@@ -52,8 +60,8 @@
   "hash": "e10d07799a749d53"
  },
  "conditions/knee-pain.html": {
-  "date": "2026-07-31",
-  "hash": "6007872cfe4b6a86"
+  "date": "2026-08-17",
+  "hash": "f65e86c42259ebf8"
  },
  "conditions/leg-length-discrepancy.html": {
   "date": "2026-07-31",
@@ -72,8 +80,8 @@
   "hash": "a42cd0808eded7c8"
  },
  "conditions/piriformis-syndrome.html": {
-  "date": "2026-07-31",
-  "hash": "17a2af0a6ebd38e4"
+  "date": "2026-08-17",
+  "hash": "0ad4fa4b7cc647cd"
  },
  "conditions/plantar-fasciitis.html": {
   "date": "2026-07-31",
@@ -96,8 +104,8 @@
   "hash": "5dae1538241ca288"
  },
  "courses.html": {
-  "date": "2026-08-06",
-  "hash": "ba548bac59e870e8"
+  "date": "2026-08-17",
+  "hash": "8d00a220bee51e33"
  },
  "dgsa-directory.html": {
   "date": "2026-08-11",
