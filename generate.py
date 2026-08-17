@@ -1274,7 +1274,7 @@ def main():
                    "clinic.html", "about.html", "network.html", "privacy.html",
                    "dgsa-directory.html",
                    "atlas/index.html", "atlas/gluteus-medius.html",
-                   "atlas/sternocleidomastoid.html",
+                   "atlas/sternocleidomastoid.html", "atlas/suboccipitals.html",
                    "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]
     lm = _lastmods(static_rels, datetime.date.today().isoformat())
 
@@ -1304,7 +1304,7 @@ def main():
                     "courses.html", "privacy.html", "network.html", "dgsa-directory.html",
                     "conditions/index.html",
                     "atlas/index.html", "atlas/gluteus-medius.html",
-                    "atlas/sternocleidomastoid.html"] \
+                    "atlas/sternocleidomastoid.html", "atlas/suboccipitals.html"] \
         + [f"conditions/{g}" for g in CONDITION_PAGES]
     for name in static_names:
         fp = SITE / name
@@ -1321,7 +1321,7 @@ def main():
     from urllib.parse import unquote
     for name in ["index.html", "services.html", "faq.html", "clinic.html", "about.html", "courses.html", "privacy.html", "network.html", "dgsa-directory.html",
                  "atlas/index.html", "atlas/gluteus-medius.html",
-                 "atlas/sternocleidomastoid.html"]:
+                 "atlas/sternocleidomastoid.html", "atlas/suboccipitals.html"]:
         fp = SITE / name
         if not fp.exists():
             continue
