@@ -1,7 +1,7 @@
 {
  "": {
-  "date": "2026-08-17",
-  "hash": "9cbf4a0d0913db80"
+  "date": "2026-08-19",
+  "hash": "6d70eb79e18a4c19"
  },
  "about.html": {
   "date": "2026-08-15",
@@ -24,8 +24,12 @@
   "hash": "b5ed38ba184a6c60"
  },
  "atlas/index.html": {
-  "date": "2026-08-17",
-  "hash": "9b9c6561ec7b4bde"
+  "date": "2026-08-19",
+  "hash": "44f31efdceee8b06"
+ },
+ "atlas/infraspinatus.html": {
+  "date": "2026-08-19",
+  "hash": "f4d7a55c47624298"
  },
  "atlas/masseter.html": {
   "date": "2026-08-17",
