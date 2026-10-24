@@ -311,7 +311,8 @@ ARTICLE_GUIDES = {
     "post-2024-04-14": ["tinnitus.html"],
     "post-2024-05-24": ["dizziness.html", "neck-pain.html"],
     "post-2024-07-09": ["tinnitus.html"],
-    "post-2024-07-27": ["si-joint-dysfunction.html"],
+    "post-2024-07-27": ["si-joint-dysfunction.html", "low-back-pain.html"],
+    "post-2026-10-01": ["low-back-pain.html"],
     "post-2024-08-20": ["si-joint-dysfunction.html"],
     "post-2024-09-12": ["neck-pain.html", "interscapular-pain.html"],
     "post-2024-09-19": ["coccydynia.html", "si-joint-dysfunction.html"],
@@ -357,6 +358,8 @@ ARTICLE_GUIDES = {
 
 # 疼痛指南主題頁（conditions/）：檔名 → (顯示標題, 一句話說明)。新增主題頁時加一行即可。
 CONDITION_PAGES = {
+    "low-back-pain.html": ("腰痛與下背痛",
+                           "「腰痛」只是總稱，底下是好幾種來源不同的問題。急性與慢性怎麼分、影像與疼痛的落差、結構／肌肉／神經三層怎麼解。"),
     "piriformis-syndrome.html": ("梨狀肌症候群",
                                  "久坐就痛、從椅子起身最痛的臀部深處痠麻，常被當成椎間盤壓迫的坐骨神經痛。"),
     "coccydynia.html": ("尾椎痛",
@@ -400,12 +403,12 @@ CONDITION_PAGES = {
 # 標籤 → 對應的疼痛指南主題頁（標籤頁頂端自動掛連結；一個標籤可對多篇）
 TAG_CONDITIONS = {
     "徒手治療": ["manual-therapy.html"],
-    "骨盆": ["si-joint-dysfunction.html", "leg-length-discrepancy.html", "manual-therapy.html",
-             "piriformis-syndrome.html", "coccydynia.html"],
+    "骨盆": ["low-back-pain.html", "si-joint-dysfunction.html", "leg-length-discrepancy.html",
+             "manual-therapy.html", "piriformis-syndrome.html", "coccydynia.html"],
     "薦髂關節": ["si-joint-dysfunction.html", "piriformis-syndrome.html", "coccydynia.html"],
     "髖・腹股溝": ["piriformis-syndrome.html", "si-joint-dysfunction.html"],
     "尾椎": ["coccydynia.html", "si-joint-dysfunction.html"],
-    "下背・腰": ["si-joint-dysfunction.html", "piriformis-syndrome.html"],
+    "下背・腰": ["low-back-pain.html", "si-joint-dysfunction.html", "piriformis-syndrome.html"],
     "顳顎關節": ["tmj-disorder.html", "tinnitus.html"],
     "顱頸整合": ["tmj-disorder.html", "headache.html", "tinnitus.html"],
     "足・踝": ["plantar-fasciitis.html", "leg-length-discrepancy.html"],
@@ -997,6 +1000,12 @@ def main():
         {"t": e["title"], "u": e["slug"], "d": e["date"],
          "g": e["tags"], "x": e["text"][:1500]}
         for e in entries
+    ]
+    # 疼痛指南頁也納入站內搜尋（連結相對於 articles/）
+    search_index += [
+        {"t": f"{t}｜疼痛指南", "u": f"../conditions/{g[:-5]}", "d": "疼痛指南",
+         "g": ["疼痛指南"], "x": d}
+        for g, (t, d) in CONDITION_PAGES.items()
     ]
     (SITE / "search-index.json").write_text(
         json.dumps(search_index, ensure_ascii=False), encoding="utf-8"
