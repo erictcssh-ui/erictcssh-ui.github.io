@@ -362,7 +362,7 @@ ARTICLE_GUIDES = {
 # 開新課只要在 SHICHU_COURSES 加一筆 dict（含報名表單連結），重跑 generate.py 即可：
 # 總覽頁、課程獨立報名頁、狀態徽章、CTA 全部自動生成。狀態改一個字全站同步。
 # SHICHU_LIVE=False 時所有拾初頁掛 noindex 且不進 sitemap（審稿模式）。
-SHICHU_LIVE = False
+SHICHU_LIVE = True
 SHICHU_NOTIFY_FORM = "https://forms.gle/bYYvfUe5jYuiEm5R8"   # 開課通知／候補總表單
 SHICHU_LINE = "https://lin.ee/V3hrlnt"                        # 拾初官方 LINE
 
@@ -636,6 +636,7 @@ def footer_html(p):
       <a href="{p}conditions/index.html">疼痛指南</a>
       <a href="{p}faq.html">初診須知</a>
       <a href="{p}courses.html">教學與工作坊</a>
+      <a href="{p}shichu/index.html">拾初學苑</a>
       <a href="{p}clinic.html">門診資訊</a>
       <a href="{p}about.html">關於醫師</a>
       <a href="{p}network.html">跨專業醫療照護網絡</a>
@@ -658,6 +659,7 @@ def page(title, body, css_prefix="../", current="articles", desc=None,
         "services": (f"{css_prefix}services.html", "診療項目"),
         "conditions": (f"{css_prefix}conditions/index.html", "疼痛指南"),
         "courses": (f"{css_prefix}courses.html", "教學與工作坊"),
+        "shichu": (f"{css_prefix}shichu/index.html", "拾初學苑"),
         "clinic": (f"{css_prefix}clinic.html", "門診資訊"),
         "about": (f"{css_prefix}about.html", "關於醫師"),
         "network": (f"{css_prefix}network.html", "醫療照護網"),
@@ -1446,7 +1448,10 @@ def main():
         sec.append("    <h2>已結課</h2>\n" + shichu_cards(closed))
     ibody = ('<p class="atlas-kicker">課程報名入口</p>\n'
              '    <h1>拾初學苑</h1>\n'
-             '    <p class="atlas-lede">針傷徒手課程的報名與開課資訊，集中在這一頁：開放報名的梯次、籌備中的新課，與歷屆課程紀錄。</p>\n'
+             '    <p class="atlas-lede">「拾古今樞，返樸如初，回歸醫者初心。」</p>\n'
+             '    <p>拾初是黃彥鈞醫師創立的中醫針傷教育品牌。從親自任教的表面解剖觸診工作坊出發，'
+             '陸續邀請各領域的醫師講師開課，把扎實的解剖、觸診與臨床思路，一門一門傳給同道。'
+             '課程的報名與開課資訊，都集中在這一頁。</p>\n'
              '    <div class="notice">課程對象為中醫師、醫學生與醫療專業人員；各課程時間、費用與退費辦法，以該課程報名表單公告為準。</div>\n\n'
              + "\n\n".join(sec)
              + f'\n\n    <div class="cta-box">\n      <p>還沒有想報的梯次？留下聯絡方式，開新課第一時間通知你。</p>\n'
