@@ -358,6 +358,72 @@ ARTICLE_GUIDES = {
     "post-2026-07-23": ["si-joint-dysfunction.html"],
 }
 
+# ── 拾初學苑：課程報名分頁 ───────────────────────────────────
+# 開新課只要在 SHICHU_COURSES 加一筆 dict（含報名表單連結），重跑 generate.py 即可：
+# 總覽頁、課程獨立報名頁、狀態徽章、CTA 全部自動生成。狀態改一個字全站同步。
+# SHICHU_LIVE=False 時所有拾初頁掛 noindex 且不進 sitemap（審稿模式）。
+SHICHU_LIVE = False
+SHICHU_NOTIFY_FORM = "https://forms.gle/bYYvfUe5jYuiEm5R8"   # 開課通知／候補總表單
+SHICHU_LINE = "https://lin.ee/V3hrlnt"                        # 拾初官方 LINE
+
+# status: open=報名中 / waitlist=候補登記 / full=已額滿 / planning=籌備中 / closed=已結束
+SHICHU_STATUS = {
+    "open":     ("🟢", "報名中",   "📝 填寫報名表單"),
+    "waitlist": ("🟡", "候補登記", "📩 登記候補"),
+    "full":     ("🔴", "已額滿",   "📩 登記候補（釋出名額優先通知）"),
+    "planning": ("⚪", "籌備中",   "📩 登記開課通知"),
+    "closed":   ("⚫", "已結束",   None),
+}
+
+SHICHU_COURSES = [
+    dict(
+        slug="surface-anatomy-6", status="open",
+        kicker="第六屆",
+        title="表面解剖觸診與針傷臨床應用工作坊",
+        dates="2027/5/16（日）・6/13（日）09:00–17:30，共兩日",
+        place="太初中醫診所（台北市中山區復興北路 92 號 6 樓之 1）",
+        capacity="16 人小班",
+        audience="中華民國合格執業中醫師、中醫醫院見習與實習醫師、各校中醫學系學生；具醫事人員執照、希望提升觸診精準度的醫療專業人員也歡迎參與。",
+        form="https://forms.gle/3sV6z5PQhuZECycp7",
+        blurb="把平面的解剖圖譜，變成親手摸得到的立體人體。第六屆起課名改為「針傷臨床應用」：觸診之外，一路走到臨床處置。",
+        body="""<h2>課程內容</h2>
+    <p>觸診，是針傷徒手領域裡基礎中的基礎——觸診手感之於徒手醫師，就如同視力之於眼睛；沒有精準的觸診與定位，再華麗的針法或手法都會失去準星。</p>
+    <p>這門兩日工作坊，把課本上平面的解剖圖譜，變成能親手摸到、親手畫出來的立體人體：從骨性標誌到肌群走向、從神經分布到臨床操作，手把手完成每個肌群的徒手辨識與劃記，並以臨床常見的疼痛主訴串接，建立結構導向的診療思路。</p>
+    <p><strong>Day 1｜肩頸與上肢：</strong>頸項肌群與神經辨識（斜方肌、胸鎖乳突肌、斜角肌群、Erb 點）、肩帶結構與旋轉肌袖、前臂與手腕肌群；臨床應用實作含 MET（肌肉能量技術）、SCS（拮抗鬆弛術）與筋膜釋放。</p>
+    <p><strong>Day 2｜骨盆與下肢：</strong>髂骨與薦椎觸診、豎脊肌與臀肌群、梨狀肌、髂腰肌，髖膝連動肌群（股三角、髂脛束、鵝足），小腿足踝與步態的動態解剖；臨床應用含髖關節理學檢查、梨狀肌症候群檢查與足踝扭傷紅旗辨識（Ottawa Ankle Rule）。</p>
+    <p><strong>歷屆紀錄：</strong>已完成四屆，累計與 64 位中醫師同道交流學習；第五屆（16 位）於 2026 年 9 月開課。→ <a href="../articles/tag-表面解剖.html">表面解剖紀錄</a>・<a href="../articles/cat-教學與工作坊.html">教學與工作坊</a></p>""",
+        note="名額依報名與完成匯款順序確認；填完報名表後，請加入拾初官方 LINE 私訊小編核對匯款資訊。課程時間、費用、報名流程與退費辦法，以報名表單公告為準。",
+    ),
+    dict(
+        slug="intro-shangke", status="planning",
+        kicker="太初・初心苑",
+        title="初玩傷科工作坊",
+        dates="籌備中，開課日期將於粉專與本頁公告",
+        place="太初中醫診所",
+        capacity="小班制",
+        audience="初次接觸傷科的中醫學弟妹。",
+        form=None,
+        blurb="傷科的起點不是背手法，而是「玩」——摸得到、做得出來，才會想繼續玩下去。",
+        body="""<h2>課程內容</h2>
+    <p>為初次接觸傷科的學弟妹設計的入門課。課程從最基礎的手感建立開始，讓每位參與者在動手探索中，長出對傷科的興趣與信心。</p>""",
+        note="開課資訊將於粉專與本頁公告；登記開課通知即可在開放報名時收到訊息。",
+    ),
+    dict(
+        slug="pelvis-correction", status="planning",
+        kicker="太初・初心苑",
+        title="骨盆錯位認識與校正實作",
+        dates="籌備中，開課日期將於粉專與本頁公告",
+        place="太初中醫診所",
+        capacity="小班制",
+        audience="中醫師與醫學生。",
+        form=None,
+        blurb="骨盆錯位至少要從 XYZ 三個軸向來觸診分析——絕不是「左右各凹一下、咖啦一聲」就調整完成。",
+        body="""<h2>課程內容</h2>
+    <p>骨盆是人體核心樞紐，其錯位至少要從 XYZ 三個軸向來觸診分析。課程整理骨盆的結構學理、三軸向觸診評估與校正手法實作，理解「調骨盆，調的是骨盆的回正能力」。</p>""",
+        note="開課資訊將於粉專與本頁公告；登記開課通知即可在開放報名時收到訊息。",
+    ),
+]
+
 # 疼痛指南主題頁（conditions/）：檔名 → (顯示標題, 一句話說明)。新增主題頁時加一行即可。
 CONDITION_PAGES = {
     "low-back-pain.html": ("腰痛與下背痛",
@@ -1313,6 +1379,86 @@ def main():
             json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
         return out
 
+    # ── 拾初學苑：總覽頁＋各課程報名頁（資料來源 SHICHU_COURSES）──
+    shichu_dir = SITE / "shichu"
+    shichu_dir.mkdir(exist_ok=True)
+    shichu_noindex = "" if SHICHU_LIVE else '\n  <meta name="robots" content="noindex">'
+
+    def shichu_cta(c):
+        dot, label, btn = SHICHU_STATUS[c["status"]]
+        parts = [f'<p class="course-kicker">{dot} {label}</p>',
+                 f'<p class="course-title">{html.escape(c["title"])}</p>',
+                 f'<p>📅 {html.escape(c["dates"])}<br>📍 {html.escape(c["place"])}<br>👥 {html.escape(c["capacity"])}</p>']
+        if c["status"] == "open" and c.get("form"):
+            parts.append(f'<p><a class="cta" href="{c["form"]}" target="_blank" rel="noopener">{btn}</a>\n'
+                         f'      <a class="cta line" href="{SHICHU_LINE}" target="_blank" rel="noopener">💬 拾初官方 LINE 洽詢</a></p>')
+        elif btn:
+            parts.append(f'<p><a class="cta" href="{c.get("form") or SHICHU_NOTIFY_FORM}" target="_blank" rel="noopener">{btn}</a>\n'
+                         f'      <a class="cta line" href="{SHICHU_LINE}" target="_blank" rel="noopener">💬 拾初官方 LINE 洽詢</a></p>')
+        if c.get("note"):
+            parts.append(f'<p class="section-note">{html.escape(c["note"])}</p>')
+        return '<div class="cta-box">\n      ' + "\n      ".join(parts) + "\n    </div>"
+
+    shichu_steps = ("""    <h2>報名流程</h2>
+    <ol>
+      <li>填寫報名表單（名額依報名與完成匯款順序確認）</li>
+      <li>加入 <a href="%s" target="_blank" rel="noopener">拾初官方 LINE</a>，私訊小編核對匯款資訊</li>
+      <li>完成匯款後，由小編確認並保留名額，開課前統一寄送行前通知</li>
+    </ol>""" % SHICHU_LINE)
+
+    for c in SHICHU_COURSES:
+        dot, label, _ = SHICHU_STATUS[c["status"]]
+        cbody = (f'<nav class="breadcrumb"><a href="../index.html">首頁</a> › '
+                 f'<a href="index.html">拾初學苑</a> › <span>{html.escape(c["title"])}</span></nav>\n\n'
+                 f'    <p class="atlas-kicker">拾初學苑・{html.escape(c["kicker"])}</p>\n'
+                 f'    <h1>{html.escape(c["title"])}</h1>\n'
+                 f'    <p class="atlas-lede">{html.escape(c["blurb"])}</p>\n\n'
+                 f'    {shichu_cta(c)}\n\n    {c["body"]}\n'
+                 f'    <h2>適合對象</h2>\n    <p>{html.escape(c["audience"])}</p>\n'
+                 + (f"\n{shichu_steps}\n" if c["status"] == "open" else "")
+                 + f'\n    <p class="section-note">想收到下一次的開課通知？'
+                 f'<a href="{SHICHU_NOTIFY_FORM}" target="_blank" rel="noopener">登記開課通知</a>，'
+                 f'或追蹤 <a href="{FB_URL}" target="_blank" rel="noopener">Facebook 粉絲專頁</a>。</p>')
+        (shichu_dir / f"{c['slug']}.html").write_text(
+            page(f"{c['title']}｜{label}", cbody, css_prefix="../", current="courses",
+                 desc=f"{c['blurb']}（{label}）{c['dates']}。拾初學苑課程報名資訊。",
+                 url_path=f"shichu/{c['slug']}.html", extra_head=shichu_noindex),
+            encoding="utf-8")
+
+    def shichu_cards(courses):
+        out = []
+        for c in courses:
+            dot, label, _ = SHICHU_STATUS[c["status"]]
+            out.append(f'      <a class="guide-card" href="{c["slug"]}.html">\n'
+                       f'        <span class="gc-title">{dot} {html.escape(c["title"])}｜{label}</span>\n'
+                       f'        <span class="gc-desc">{html.escape(c["blurb"])}</span>\n      </a>')
+        return '    <div class="guide-grid">\n' + "\n".join(out) + "\n    </div>"
+
+    sec = []
+    active = [c for c in SHICHU_COURSES if c["status"] in ("open", "waitlist", "full")]
+    planning = [c for c in SHICHU_COURSES if c["status"] == "planning"]
+    closed = [c for c in SHICHU_COURSES if c["status"] == "closed"]
+    if active:
+        sec.append("    <h2>開放報名</h2>\n" + shichu_cards(active))
+    if planning:
+        sec.append("    <h2>籌備中</h2>\n" + shichu_cards(planning))
+    if closed:
+        sec.append("    <h2>已結課</h2>\n" + shichu_cards(closed))
+    ibody = ('<p class="atlas-kicker">課程報名入口</p>\n'
+             '    <h1>拾初學苑</h1>\n'
+             '    <p class="atlas-lede">針傷徒手課程的報名與開課資訊，集中在這一頁：開放報名的梯次、籌備中的新課，與歷屆課程紀錄。</p>\n'
+             '    <div class="notice">課程對象為中醫師、醫學生與醫療專業人員；各課程時間、費用與退費辦法，以該課程報名表單公告為準。</div>\n\n'
+             + "\n\n".join(sec)
+             + f'\n\n    <div class="cta-box">\n      <p>還沒有想報的梯次？留下聯絡方式，開新課第一時間通知你。</p>\n'
+             f'      <p><a class="cta" href="{SHICHU_NOTIFY_FORM}" target="_blank" rel="noopener">📩 登記開課通知</a>\n'
+             f'      <a class="cta line" href="{SHICHU_LINE}" target="_blank" rel="noopener">💬 拾初官方 LINE</a></p>\n    </div>\n'
+             '    <p class="section-note">想了解課程理念與歷屆現場紀錄，請見<a href="../courses.html">教學與工作坊</a>。</p>')
+    (shichu_dir / "index.html").write_text(
+        page("拾初學苑｜課程報名", ibody, css_prefix="../", current="courses",
+             desc="拾初學苑課程報名入口：表面解剖觸診與針傷臨床應用工作坊等課程的開課梯次、報名方式與開課通知登記。",
+             url_path="shichu/index.html", extra_head=shichu_noindex),
+        encoding="utf-8")
+
     static_rels = ["", "articles/index.html", "services.html", "faq.html", "courses.html",
                    "clinic.html", "about.html", "network.html", "privacy.html",
                    "dgsa-directory.html",
@@ -1321,6 +1467,8 @@ def main():
                    "atlas/upper-trapezius.html", "atlas/gluteus-maximus.html",
                    "atlas/masseter.html", "atlas/quadratus-lumborum.html", "atlas/iliopsoas.html", "atlas/infraspinatus.html",
                    "conditions/index.html"] + [f"conditions/{g}" for g in CONDITION_PAGES]
+    if SHICHU_LIVE:
+        static_rels += ["shichu/index.html"] + [f"shichu/{c['slug']}.html" for c in SHICHU_COURSES]
     lm = _lastmods(static_rels, datetime.date.today().isoformat())
 
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
